@@ -1,7 +1,7 @@
 <template>
   <div class="logo">
     <img class="img" src="../assets/logo.png" />
-    <p>Scroll Down</p>
+    <img class="down" src="../assets/down.png" />
   </div>
 </template>
 
@@ -24,12 +24,11 @@ export default {
 }
 
 .img {
-  height: 70%;
+  height: 70vh;
 }
 
-p {
-  font-family: "Teko", sans-serif;
-  font-size: 3vh;
+.down {
+  height: 2vh;
   animation: scrollDown 2s infinite;
   -webkit-animation: scrollDown 2s infinite;
   -moz-animation: scrollDown 2s infinite;
