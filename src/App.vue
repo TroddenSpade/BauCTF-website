@@ -26,7 +26,7 @@ export default {
 
 <style >
 @import url("https://fonts.googleapis.com/css?family=Teko:700&display=swap");
-
+@import url("https://fonts.googleapis.com/css?family=Anton&display=swap");
 body {
   margin: 0;
 }
