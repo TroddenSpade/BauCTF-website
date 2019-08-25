@@ -93,6 +93,14 @@ export default {
   font-family: "Teko", sans-serif;
 }
 
+.profile:hover .pic {
+  filter: grayscale(0%);
+}
+
+.profile:hover .name {
+  background-color: yellow;
+}
+
 .pic {
   height: 30vh;
   border-radius: 30vh;
@@ -102,18 +110,14 @@ export default {
   filter: grayscale(100%);
 }
 
-.pic:hover {
-  filter: grayscale(0%);
-}
-
 .name {
   font-size: 3vh;
   display: flex;
   justify-content: center;
-  background-color: yellow;
   border: solid;
   border-width: 1px;
   border-radius: 5px;
+  border-color: white;
 }
 
 .info {
@@ -130,10 +134,6 @@ export default {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  /* border-top: solid;
-  border-top-width: 2px;
-  border-top-color: yellow; */
-  /* background-color: aqua; */
 }
 
 .bottom {
