@@ -1,23 +1,18 @@
 <template>
   <div>
-    <div class="fake-navbar" v-show="isStuck"></div>
-    <div class="navbar" :class="{'sticky-navbar':isStuck}">
+    <div class="fake-navbar" v-show="isStuck || stickable"></div>
+    <div class="navbar" :class="{'sticky-navbar':isStuck || stickable}">
       <img class="img" src="../assets/logo.png" />
-      <a>
-        <p>HOME</p>
-      </a>
-      <a>
-        <p>SCOREBOARD</p>
-      </a>
-      <a>
-        <p>CHALLENGES</p>
-      </a>
+      <router-link to="/" tag="a" active-class="active" exact>HOME</router-link>
+      <router-link to="/scoreboard" tag="a" active-class="active">SCOREBOARD</router-link>
+      <router-link to="/challenges" tag="a" active-class="active">CHALLENGES</router-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: ["stickable"],
   data: function() {
     return { isStuck: false };
   },
@@ -66,8 +61,14 @@ export default {
   border-bottom-width: 3px;
 }
 
-p {
+a {
   font-family: "Teko", sans-serif;
   font-size: 3vh;
+  text-decoration: none;
+  color: grey;
+}
+
+.active {
+  color: black;
 }
 </style>
