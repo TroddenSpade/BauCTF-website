@@ -1,25 +1,19 @@
 <template>
   <div>
-    <Logo />
-    <Header />
-    <Main />
+    <Header v-show="$route.path != '/'" :stickable="$route.path!= '/'" />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Logo from "./components/Logo";
 import Header from "./components/Header";
-import Main from "./components/Main";
-
 export default {
   name: "app",
   data() {
     return {};
   },
   components: {
-    Logo,
-    Header,
-    Main
+    Header
   }
 };
 </script>
