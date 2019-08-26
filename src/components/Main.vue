@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div>
     <What />
     <Who />
     <How />
@@ -22,9 +22,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.main {
-  height: 200vh;
-}
-</style>

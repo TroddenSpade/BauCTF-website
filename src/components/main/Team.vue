@@ -134,6 +134,7 @@ export default {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  font-size: 1.5vw;
 }
 
 .bottom {
