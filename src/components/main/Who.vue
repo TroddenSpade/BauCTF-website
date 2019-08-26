@@ -1,6 +1,8 @@
 <template>
   <div class="main">
-    <div class="half1"></div>
+    <div class="half1">
+      <img class="running" src="../../assets/running.png" alt />
+    </div>
 
     <div class="half2">
       <h1>Who is it for ?</h1>
@@ -37,8 +39,13 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 50%;
   height: 100%;
+}
+
+.running {
+  width: 30vw;
 }
 
 h1 {
