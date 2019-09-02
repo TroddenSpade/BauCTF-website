@@ -18,9 +18,10 @@ export default {
 
 <style scoped>
 .main {
-  height: 90vh;
-  width: 100vw;
+  min-height: 90vh;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .half1 {
@@ -45,10 +46,11 @@ export default {
 
 .flag {
   width: auto;
-  height: 40vh;
+  height: 20vw;
 }
 
 h1 {
+  font-size: 3vw;
   font-family: "Anton", sans-serif;
 }
 </style>

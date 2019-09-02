@@ -17,14 +17,14 @@ export default {
   flex: 1;
   background-color: yellow;
   height: 100vh;
-  width: 100vw;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
 .img {
-  height: 70vh;
+  max-height: 70vh;
+  max-width: 80vw;
 }
 
 .down {

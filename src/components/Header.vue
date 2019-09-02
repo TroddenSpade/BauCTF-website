@@ -2,10 +2,12 @@
   <div>
     <div class="fake-navbar" v-show="isStuck || stickable"></div>
     <div class="navbar" :class="{'sticky-navbar':isStuck || stickable}">
-      <img class="img" src="../assets/logo.png" />
-      <router-link to="/" tag="a" active-class="active" exact>HOME</router-link>
-      <router-link to="/scoreboard" tag="a" active-class="active">SCOREBOARD</router-link>
-      <router-link to="/challenges" tag="a" active-class="active">CHALLENGES</router-link>
+      <div class="quarter">
+        <img class="img" src="../assets/logo.png" />
+      </div>
+      <router-link class="quarter" to="/" tag="a" active-class="active" exact>HOME</router-link>
+      <router-link class="quarter" to="/scoreboard" tag="a" active-class="active">SCOREBOARD</router-link>
+      <router-link class="quarter" to="/challenges" tag="a" active-class="active">CHALLENGES</router-link>
     </div>
   </div>
 </template>
@@ -37,10 +39,8 @@ export default {
 <style scoped>
 .navbar {
   height: 10vh;
-  flex: 1;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
   align-items: center;
   background-color: white;
 }
@@ -51,6 +51,13 @@ export default {
 
 .img {
   height: 10vh;
+}
+
+.quarter {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sticky-navbar {
@@ -65,7 +72,7 @@ a {
   font-family: "Teko", sans-serif;
   font-size: 3vh;
   text-decoration: none;
-  color: grey;
+  color: rgb(189, 189, 189);
 }
 
 .active {

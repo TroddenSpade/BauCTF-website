@@ -5,7 +5,7 @@
       <div class="members">
         <div class="profile">
           <img class="pic" src="https://randomuser.me/api/portraits/men/86.jpg" alt />
-          <p class="name">Parsa Samadnejad</p>
+          <p class="name">Rohit Kayin</p>
           <p class="info">
             Front-end Developer
             <br />
@@ -13,7 +13,7 @@
         </div>
         <div class="profile">
           <img class="pic" src="https://randomuser.me/api/portraits/men/54.jpg" alt />
-          <p class="name">Parsa Sam</p>
+          <p class="name">Dave Ireland</p>
           <p class="info">
             Back-end Developer
             <br />
@@ -21,7 +21,7 @@
         </div>
         <div class="profile">
           <img class="pic" src="https://randomuser.me/api/portraits/men/32.jpg" alt />
-          <p class="name">Parsa Sam</p>
+          <p class="name">Sadhbh Priscilla</p>
           <p class="info">
             Designer
             <br />
@@ -29,7 +29,7 @@
         </div>
         <div class="profile">
           <img class="pic" src="https://randomuser.me/api/portraits/men/12.jpg" alt />
-          <p class="name">Parsa Sam</p>
+          <p class="name">Caligula Rohan</p>
           <p class="info">
             CFO
             <br />
@@ -40,19 +40,19 @@
 
     <div class="contact">
       <h1 class="part">CONTACT US</h1>
-      <a class="part">
+      <a class="part" target="_blank">
         <img class="logo" src="../../assets/gmail-logo.png" alt="gmail" />
       </a>
-      <a class="part">
+      <a class="part" href="https://t.me/kntuctf" target="_blank">
         <img class="logo" src="../../assets/telegram_logo.png" alt="telegram" />
       </a>
-      <a class="part">
-        <img class="logo" src="../../assets/github_logo.png" alt="github" />
+      <a class="part" href="https://github.com/kntu-ctf" target="_blank">
+        <img class="logo" src="../../assets/github-logo.png" alt="github" />
       </a>
     </div>
 
     <div class="bottom">
-      <p class="copy">Copyright © 2019 Parsa Samadnejad</p>
+      <p class="copy">Copyright © 2019 CTF kntu</p>
     </div>
   </div>
 </template>
@@ -65,8 +65,7 @@ export default {
 
 <style scoped>
 .main {
-  height: 90vh;
-  width: 100vw;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -75,16 +74,18 @@ export default {
 
 .team {
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .members {
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-flow: row wrap;
 }
 
 .profile {
@@ -129,7 +130,7 @@ export default {
 
 .contact {
   height: 20vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -139,7 +140,7 @@ export default {
 
 .bottom {
   height: 5vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   background-color: yellow;
   justify-content: center;
@@ -157,7 +158,8 @@ export default {
 }
 
 .logo {
-  height: 5vh;
+  max-width: 5vw;
+  max-height: 5vh;
   transition: transform 0.5s;
 }
 
