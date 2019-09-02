@@ -24,4 +24,12 @@ export default {
 body {
   margin: 0;
 }
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
 </style>
