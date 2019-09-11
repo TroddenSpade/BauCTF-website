@@ -3,42 +3,42 @@
     "name": "C1",
     "point": "100",
     "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "attach": "https://github.com/kntu-ctf",
-    "address": ""
+    "attach": "<a href='https://github.com/kntu-ctf'>[&diams;link]</a>",
+    "author": "author"
   },
   {
     "name": "C2",
     "point": "200",
     "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "attach": "https://github.com/kntu-ctf",
-    "address": ""
+    "attach": "<a href='https://github.com/kntu-ctf'>[&diams;link]</a>",
+    "author": "author"
   },
   {
     "name": "C3",
     "point": "300",
     "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "attach": "https://github.com/kntu-ctf",
-    "address": ""
+    "attach": "<a href='https://github.com/kntu-ctf'>[&diams;link]</a>",
+    "author": "author"
   },
   {
     "name": "C4",
     "point": "400",
     "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "attach": "https://github.com/kntu-ctf",
-    "address": ""
+    "attach": "<a href='https://github.com/kntu-ctf'>[&diams;link]</a>",
+    "author": "author"
   },
   {
     "name": "C5",
     "point": "500",
     "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "attach": "https://github.com/kntu-ctf",
-    "address": ""
+    "attach": "<a href='https://github.com/kntu-ctf'>[&diams;link]</a>",
+    "author": "author"
   },
   {
     "name": "C6",
     "point": "600",
     "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "attach": "https://github.com/kntu-ctf",
-    "address": ""
+    "attach": "<a href='https://github.com/kntu-ctf'>[&diams;link]</a>",
+    "author": "author"
   }
 ]
