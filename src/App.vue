@@ -21,12 +21,20 @@ export default {
 <style >
 @import url("https://fonts.googleapis.com/css?family=Teko:700&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Anton&display=swap");
+@font-face {
+  font-family: "Arcade";
+  font-style: normal;
+  src: url("./assets/ARCADE_N.TTF");
+}
 body {
   margin: 0;
 }
 html {
   overflow: scroll;
   overflow-x: hidden;
+}
+a {
+  color: black;
 }
 ::-webkit-scrollbar {
   width: 0px;
