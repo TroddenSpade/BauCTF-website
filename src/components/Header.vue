@@ -2,12 +2,10 @@
   <div>
     <div class="fake-navbar" v-show="isStuck || stickable"></div>
     <div class="navbar" :class="{'sticky-navbar':isStuck || stickable}">
-      <div class="quarter">
-        <img class="img" src="../assets/logo.png" />
-      </div>
-      <router-link class="quarter" to="/" tag="a" active-class="active" exact>HOME</router-link>
-      <router-link class="quarter" to="/scoreboard" tag="a" active-class="active">SCOREBOARD</router-link>
-      <router-link class="quarter" to="/challenges" tag="a" active-class="active">CHALLENGES</router-link>
+      <img class="img" src="../assets/logo.png" />
+      <router-link to="/" tag="a" active-class="active" exact>HOME</router-link>
+      <router-link to="/scoreboard" tag="a" active-class="active">SCOREBOARD</router-link>
+      <router-link to="/challenges" tag="a" active-class="active">CHALLENGES</router-link>
     </div>
   </div>
 </template>
@@ -19,7 +17,7 @@ export default {
     return { isStuck: false };
   },
   methods: {
-    handleScroll(event) {
+    handleScroll() {
       if (window.scrollY > window.innerHeight) {
         this.isStuck = true;
       } else {
@@ -41,6 +39,7 @@ export default {
   height: 10vh;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   align-items: center;
   background-color: white;
 }
@@ -53,16 +52,10 @@ export default {
   height: 10vh;
 }
 
-.quarter {
-  width: 25%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .sticky-navbar {
   position: fixed;
   top: 0%;
+  z-index: 1;
   width: 100%;
   border-bottom: solid yellow;
   border-bottom-width: 3px;
@@ -73,6 +66,10 @@ a {
   font-size: 3vh;
   text-decoration: none;
   color: rgb(189, 189, 189);
+}
+
+a:not(.active):hover {
+  color: rgb(129, 129, 129);
 }
 
 .active {
