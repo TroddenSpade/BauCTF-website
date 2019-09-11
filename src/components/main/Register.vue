@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div data-aos="fade-up" data-aos-duration="1000" class="main">
     <h1>Would you like to participate ?</h1>
     <a class="link" :href="link" target="_blank">
       <img class="register" src="../../assets/register.png" alt />
@@ -20,7 +20,7 @@ export default {
 <style scoped>
 .main {
   width: 100vw;
-  height: 50vh;
+  height: 40vh;
   background-color: yellow;
   display: flex;
   flex-direction: row;

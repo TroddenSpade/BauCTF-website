@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <div class="team" v-for="(team,index) in teams" :key="index">
+      <div data-aos="fade-up" data-aos-duration="1000" class="team" v-for="(team,index) in teams" :key="index">
         <h2>{{index+1}}</h2>
         <h1 class="name">{{team.name}}</h1>
         <div class="problem" v-for="index in 12" :key="index">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import teams from "../../data/teams.json";
+import teams from "../data/teams.json";
 export default {
   name: "score-board",
   data: function() {
@@ -54,6 +54,7 @@ export default {
 
 .table {
   width: 90vw;
+  margin-bottom:10vh;
 }
 
 .head-table {
@@ -67,8 +68,7 @@ export default {
   border-bottom-color: lightgray;
   border-bottom-width: 1px;
   background-color: yellow;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
   font-family: "Teko", sans-serif;
 }
 
@@ -105,7 +105,9 @@ export default {
   display: flex;
   flex-direction: row;
 }
-
+h1 {
+  font-size: 2vw;
+}
 h2 {
   font-family: "Teko", sans-serif;
 }

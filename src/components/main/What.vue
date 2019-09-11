@@ -1,8 +1,8 @@
 <template>
   <div class="main">
-    <div class="half1">
+    <div data-aos="fade-right" data-aos-duration="1000" class="half1">
       <h1>What is CTF ?</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing vitae proin sagittis nisl rhoncus mattis. Vel facilisis volutpat est velit egestas dui id ornare. Bibendum arcu vitae elementum curabitur vitae nunc sed. Posuere sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Cursus vitae congue mauris rhoncus. Enim nulla aliquet porttitor lacus. Viverra nam libero justo laoreet sit amet cursus sit. Velit sed ullamcorper morbi tincidunt ornare massa eget egestas. Parturient montes nascetur ridiculus mus mauris vitae. Magna fermentum iaculis eu non diam phasellus vestibulum lorem. Risus feugiat in ante metus dictum at. Ut enim blandit volutpat maecenas. Arcu dui vivamus arcu felis. Amet facilisis magna etiam tempor orci eu lobortis elementum. Habitant morbi tristique senectus et netus et malesuada fames. Varius quam quisque id diam vel quam elementum pulvinar etiam. Velit egestas dui id ornare arcu odio. Euismod in pellentesque massa placerat.</p>
+      <p>CTF (Capture The Flag) is a competition in which contestants have to solve a variety of tasks ranging from basic to expert programming exercises, such as file scavenging or decrypting a message. In these challenges, the contestant is usually asked to find a specific string that may be hidden on the server or behind a webpage. This goal is called the flag, hence the name!</p>
     </div>
     <div class="half2">
       <img class="flag" src="../../assets/flag.png" alt />
@@ -18,7 +18,7 @@ export default {
 
 <style scoped>
 .main {
-  min-height: 90vh;
+  min-height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,11 +46,16 @@ export default {
 
 .flag {
   width: auto;
-  height: 20vw;
+  height: 30vw;
 }
 
 h1 {
   font-size: 3vw;
   font-family: "Anton", sans-serif;
+}
+
+p {
+  font-family: "teko", sans-serif;
+  font-size: 20px;
 }
 </style>
