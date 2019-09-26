@@ -1,11 +1,11 @@
 import Vue from "vue";
 import App from "./App.vue";
-import AOS from 'aos'
+import AOS from "aos";
 import VueRouter from "vue-router";
 
+import { store } from "./store/index.js";
 import { routes } from "./routes";
-import 'aos/dist/aos.css'
-
+import "aos/dist/aos.css";
 
 Vue.use(VueRouter);
 
@@ -17,10 +17,11 @@ const router = new VueRouter({
 });
 
 new Vue({
-  el: '#app',
+  store,
+  el: "#app",
   router,
-  created () {
-    AOS.init()
+  created() {
+    AOS.init();
   },
   render: h => h(App)
-})
+});
