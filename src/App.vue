@@ -9,6 +9,11 @@
 import Header from "./components/Header";
 export default {
   name: "app",
+  created: function() {
+    if (localStorage.getItem("username") && localStorage.getItem("token")) {
+      this.$store.commit("signInStatus", true);
+    }
+  },
   data() {
     return {};
   },
