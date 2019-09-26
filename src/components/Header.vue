@@ -6,16 +6,23 @@
       <router-link to="/" tag="a" active-class="active" exact>HOME</router-link>
       <router-link to="/scoreboard" tag="a" active-class="active">SCOREBOARD</router-link>
       <router-link to="/challenges" tag="a" active-class="active">CHALLENGES</router-link>
+      <div class="status">
+        <router-link to="/login" class="login" tag="a" active-class="active" v-if="!signedIn">LOGIN</router-link>
+        <a class="login" v-else @click="logout()">SIGN OUT</a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   props: ["stickable"],
   data: function() {
     return { isStuck: false };
   },
+  computed: mapState(["signedIn"]),
   methods: {
     handleScroll() {
       if (window.scrollY > window.innerHeight) {
@@ -23,6 +30,11 @@ export default {
       } else {
         this.isStuck = false;
       }
+    },
+    logout() {
+      localStorage.removeItem("username");
+      localStorage.removeItem("token");
+      this.$store.commit("signInStatus", false);
     }
   },
   created: function() {
@@ -48,6 +60,16 @@ export default {
   height: 10vh;
 }
 
+p,
+.login {
+  font-family: "Teko", sans-serif;
+
+  font-size: 18px;
+  color: yellow;
+  text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black;
+  cursor: pointer;
+}
+
 .img {
   height: 10vh;
 }
@@ -61,11 +83,19 @@ export default {
   border-bottom-width: 3px;
 }
 
+.status {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 a {
   font-family: "Teko", sans-serif;
   font-size: 3vh;
   text-decoration: none;
   color: rgb(189, 189, 189);
+  /* text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black; */
 }
 
 a:not(.active):hover {
@@ -74,5 +104,6 @@ a:not(.active):hover {
 
 .active {
   color: black;
+  text-shadow: none;
 }
 </style>
