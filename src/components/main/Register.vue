@@ -32,6 +32,7 @@ export default {
   border: solid;
   border-width: 5px;
   padding: 5px;
+  border-width: 3px;
   border-radius: 10px;
   border-color: black;
   transition: 0.5s;

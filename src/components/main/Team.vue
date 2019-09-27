@@ -3,52 +3,108 @@
     <div class="team">
       <h1>OUR TEAM</h1>
       <div class="members">
-        <div class="profile">
-          <img class="pic" src="https://randomuser.me/api/portraits/men/86.jpg" alt />
-          <p class="name">Rohit Kayin</p>
-          <p class="info">
-            Front-end Developer
-            <br />
-          </p>
+        <div class="line" data-aos="fade-up" data-aos-duration="1000">
+          <div class="profile">
+            <img class="pic" src="../../assets/profile/sam.jpg" alt />
+            <p class="name">Parsa Samadnejad</p>
+            <p class="info">
+              Leader
+              <br />Full-Stack JS Developer
+              <br />Challenge Designer
+            </p>
+          </div>
+          <div class="profile">
+            <img class="pic" src="../../assets/profile/reza.jpg" alt />
+            <p class="name">Reza Liaghat</p>
+            <p class="info">
+              Executive Director
+              <br />Challenge Designer
+              <br />Content Creator
+            </p>
+          </div>
+          <div class="profile">
+            <img class="pic" src="../../assets/profile/mahdi.jpg" alt />
+            <p class="name">Mahdi Mahmoodian</p>
+            <p class="info">Executive Director</p>
+          </div>
         </div>
-        <div class="profile">
-          <img class="pic" src="https://randomuser.me/api/portraits/men/54.jpg" alt />
-          <p class="name">Dave Ireland</p>
-          <p class="info">
-            Back-end Developer
-            <br />
-          </p>
+        <div class="line" data-aos="fade-up" data-aos-duration="1000">
+          <div class="profile">
+            <img class="pic" src="../../assets/profile/parsa.jpg" alt />
+            <p class="name">Parsa Mazaheri</p>
+            <p class="info">
+              Challenge Designer
+              <br />Executive staff
+            </p>
+          </div>
+          <div class="profile">
+            <img class="pic" src="../../assets/profile/rambod.jpg" alt />
+            <p class="name">Rambod Azimi</p>
+            <p class="info">
+              Content Creator
+              <br />
+            </p>
+          </div>
+          <div class="profile">
+            <img class="pic" src="../../assets/profile/elahi.jpg" alt />
+            <p class="name">Ali Elahi</p>
+            <p class="info">
+              Public Relations
+              <br />
+            </p>
+          </div>
         </div>
-        <div class="profile">
-          <img class="pic" src="https://randomuser.me/api/portraits/men/32.jpg" alt />
-          <p class="name">Sadhbh Priscilla</p>
-          <p class="info">
-            Designer
-            <br />
-          </p>
-        </div>
-        <div class="profile">
-          <img class="pic" src="https://randomuser.me/api/portraits/men/12.jpg" alt />
-          <p class="name">Caligula Rohan</p>
-          <p class="info">
-            CFO
-            <br />
-          </p>
+        <div class="line" data-aos="fade-up" data-aos-duration="1000">
+          <div class="profile">
+            <img class="pic" src="../../assets/profile/mehran.jpg" alt />
+            <p class="name">Mehran Ghajari</p>
+            <p class="info">
+              Executive staff
+              <br />
+            </p>
+          </div>
+          <div class="profile">
+            <img class="pic" src="../../assets/profile/kolagar.png" alt />
+            <p class="name">M Reza Koagar</p>
+            <p class="info">
+              Executive staff
+              <br />
+            </p>
+          </div>
+          <div class="profile">
+            <img class="pic" src="../../assets/profile/arman.jpg" alt />
+            <p class="name">Arman Takestani</p>
+            <p class="info">
+              Executive staff
+              <br />
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="contact">
       <h1 class="part">CONTACT US</h1>
-      <a class="part" target="_blank">
-        <img class="logo" src="../../assets/gmail-logo.png" alt="gmail" />
-      </a>
-      <a class="part" href="https://t.me/kntuctf" target="_blank">
-        <img class="logo" src="../../assets/telegram_logo.png" alt="telegram" />
-      </a>
-      <a class="part" href="https://github.com/kntu-ctf" target="_blank">
-        <img class="logo" src="../../assets/github-logo.png" alt="github" />
-      </a>
+      <div class="part">
+        <a target="_blank">
+          <img class="logo" src="../../assets/gmail-logo.png" alt="gmail" />
+        </a>
+      </div>
+      <div class="part">
+        <a href="https://t.me/kntuctf" target="_blank">
+          <img class="logo" src="../../assets/telegram_logo.png" alt="telegram" />
+        </a>
+      </div>
+      <div class="part">
+        <a href="https://www.instagram.com/kntuctf" target="_blank">
+          <img class="logo" src="../../assets/instagram-logo.png" alt="github" />
+        </a>
+      </div>
+      <div class="part">
+        <a href="https://github.com/kntu-ctf" target="_blank">
+          <img class="logo" src="../../assets/github-logo.png" alt="github" />
+        </a>
+      </div>
     </div>
 
     <div class="bottom">
@@ -78,12 +134,21 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: white;
+  background-image: radial-gradient(rgb(255, 255, 160) 20%, transparent 0),
+    radial-gradient(rgb(255, 255, 160) 20%, transparent 0);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
 }
 
-.members {
+.team > h1 {
+  font-size: 50px;
+}
+
+.line {
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   flex-flow: row wrap;
 }
@@ -92,19 +157,22 @@ export default {
   justify-content: center;
   align-items: center;
   font-family: "Teko", sans-serif;
+  margin: 2vh;
 }
 
 .profile:hover .pic {
   filter: grayscale(0%);
+  transition: filter 1s;
 }
 
 .profile:hover .name {
   background-color: yellow;
+  transition: background-color 1s;
 }
 
 .pic {
-  height: 30vh;
-  border-radius: 30vh;
+  height: 23vh;
+  border-radius: 20vh;
   border: solid;
   border-width: 3px;
   border-color: yellow;
@@ -119,6 +187,8 @@ export default {
   border-width: 1px;
   border-radius: 5px;
   border-color: white;
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .info {
@@ -126,6 +196,8 @@ export default {
   display: flex;
   justify-content: center;
   color: grey;
+  margin: 0;
+  min-height: 9vh;
 }
 
 .contact {
@@ -136,6 +208,7 @@ export default {
   justify-content: space-around;
   align-items: center;
   font-size: 1.5vw;
+  background-color: yellow;
 }
 
 .bottom {
@@ -152,7 +225,7 @@ export default {
 }
 
 .part {
-  width: 25%;
+  width: 20%;
   display: flex;
   justify-content: center;
 }
