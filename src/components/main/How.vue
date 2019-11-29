@@ -21,8 +21,10 @@ export default {
 <style scoped>
 .main {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  flex-flow: row wrap;
+  padding-bottom: 10vh;
 }
 
 .main_dark {
@@ -225,7 +227,8 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin: 10vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
 }
 
 .half2 {

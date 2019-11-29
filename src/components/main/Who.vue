@@ -1,7 +1,8 @@
 <template>
   <div class="main" :class="{'main_dark':dark}">
-    <div class="glitch" data-text="Who is it for ?">Who is it for ?</div>
-
+    <div class="half1">
+      <div class="glitch" data-text="Who is it for ?">Who is it for ?</div>
+    </div>
     <div class="half2">
       <p>As mentioned, KNTU CTF is more of an intuitive based challenge, so all you need to participate in our event is a basic programming knowledge, good intuition and out of the box thinking. if you think you have these qualities then stay tuned for our events, because you belong there.</p>
     </div>
@@ -22,6 +23,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 10vh;
 }
 
 .main_dark {
@@ -224,7 +226,8 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin: 10vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
 }
 
 .half2 {

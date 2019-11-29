@@ -1,6 +1,8 @@
 <template>
   <div class="logo">
     <!-- <img class="img" src="../assets/logo.png" /> -->
+    <canvas id="c"></canvas>
+
     <section></section>
     <img class="down" src="../assets/down.png" />
   </div>
@@ -8,7 +10,43 @@
 
 <script>
 export default {
-  name: "logo"
+  name: "logo",
+  mounted: function() {
+    // geting canvas by Boujjou Achraf
+    var c = document.getElementById("c");
+    var ctx = c.getContext("2d");
+
+    c.height = window.innerHeight;
+    c.width = window.innerWidth;
+
+    var matrix =
+      "田由甲申甴电甶男甸甹町画甼甽甾甿abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+    matrix = matrix.split("");
+
+    var font_size = 10;
+    var columns = c.width / font_size;
+    var drops = [];
+    for (var x = 0; x < columns; x++) drops[x] = 1;
+
+    function draw() {
+      ctx.fillStyle = "rgb(255,255,0, 0.04)";
+      ctx.fillRect(0, 0, c.width, c.height);
+
+      ctx.fillStyle = "rgba(28,28,30)";
+      ctx.font = font_size + "px arial";
+      for (var i = 0; i < drops.length; i++) {
+        var text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+        if (drops[i] * font_size > c.height && Math.random() > 0.975)
+          drops[i] = 0;
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 30);
+  }
 };
 </script>
 
@@ -16,7 +54,6 @@ export default {
 .logo {
   display: flex;
   flex: 1;
-  background-color: yellow;
   height: 100vh;
   justify-content: center;
   align-items: center;
@@ -29,14 +66,16 @@ export default {
 }
 
 .down {
-  height: 2vh;
+  top: 90%;
+  position: absolute;
+  height: 3vh;
   animation: scrollDown 2s infinite;
   -webkit-animation: scrollDown 2s infinite;
   -moz-animation: scrollDown 2s infinite;
 }
 
 section {
-  position: relative;
+  position: absolute;
   height: 70vh;
   width: 80vw;
   background-image: url(../assets/logo.png);
@@ -57,9 +96,9 @@ section::before {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   opacity: 0.5;
-  animation: glitch 2s linear infinite;
-  -webkit-animation: glitch 2s infinite;
-  -moz-animation: glitch 2s infinite;
+  animation: glitch 4s linear infinite;
+  -webkit-animation: glitch 4s infinite;
+  -moz-animation: glitch 4s infinite;
 }
 
 @keyframes glitch {
@@ -67,29 +106,32 @@ section::before {
     background-position: 50% 50%;
     /* filter: hue-rotate(0deg); */
   }
-  2% {
+  1% {
     background-position: 40% 52%;
   }
-  4% {
+  2% {
     background-position: 60% 52%;
   }
-  6% {
+  3% {
     background-position: 47% 47%;
   }
-  8% {
+  4% {
     background-position: 50% 50%;
     /* filter: hue-rotate(360deg); */
   }
-  10% {
+  19% {
+    background-position: 50% 50%;
+  }
+  20% {
     background-position: 40% 52%;
   }
-  12% {
+  21% {
     background-position: 60% 52%;
   }
-  14% {
+  22% {
     background-position: 47% 47%;
   }
-  16% {
+  23% {
     background-position: 50% 50%;
     /* filter: hue-rotate(360deg); */
   }

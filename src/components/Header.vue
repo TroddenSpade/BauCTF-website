@@ -2,11 +2,25 @@
   <div>
     <div class="fake-navbar" v-show="isStuck || stickable"></div>
     <div class="navbar" :class="{'navbar_dark':dark,'sticky-navbar':isStuck || stickable}">
-      <router-link to="/" tag="a" active-class="active" exact>HOME</router-link>
-      <router-link to="/scoreboard" tag="a" active-class="active">SCOREBOARD</router-link>
-      <router-link to="/challenges" tag="a" active-class="active">CHALLENGES</router-link>
+      <router-link to="/" tag="a" :active-class="dark ? 'active_dark' : 'active'" exact>HOME</router-link>
+      <router-link
+        to="/scoreboard"
+        tag="a"
+        :active-class="dark ? 'active_dark' : 'active'"
+      >SCOREBOARD</router-link>
+      <router-link
+        to="/challenges"
+        tag="a"
+        :active-class="dark ? 'active_dark' : 'active'"
+      >CHALLENGES</router-link>
       <div class="status">
-        <router-link to="/login" class="login" tag="a" active-class="active" v-if="!signedIn">LOGIN</router-link>
+        <router-link
+          to="/login"
+          class="login"
+          tag="a"
+          :active-class="dark ? 'active_dark' : 'active'"
+          v-if="!signedIn"
+        >LOGIN</router-link>
         <a class="login" v-else @click="logout()">SIGN OUT</a>
       </div>
     </div>
@@ -120,16 +134,20 @@ a {
   font-family: "Teko", sans-serif;
   font-size: 3vh;
   text-decoration: none;
-  color: rgb(189, 189, 189);
+  color: grey;
   /* text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black; */
 }
 
 a:not(.active):hover {
-  color: rgb(129, 129, 129);
+  color: lightgrey;
 }
 
 .active {
   color: black;
   text-shadow: none;
+}
+
+.active_dark {
+  color: #fefefe;
 }
 </style>

@@ -24,6 +24,7 @@ export default {
   justify-content: space-around;
   align-items: center;
   flex-flow: row wrap;
+  padding-bottom: 10vh;
 }
 
 .glitch {
@@ -226,7 +227,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin: 10vw;
+  margin: 5vw;
 }
 
 .half2 {

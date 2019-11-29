@@ -49,7 +49,7 @@
               <br />Executive staff
             </p>
           </div>
-          <div class="profile">
+          <!-- <div class="profile">
             <img class="pic" src="../../assets/profile/rambod.jpg" alt />
             <p class="name">Rambod Azimi</p>
             <p class="info">
@@ -64,9 +64,9 @@
               Public Relations
               <br />
             </p>
-          </div>
+          </div>-->
         </div>
-        <div class="line" data-aos="fade-up" data-aos-duration="1000">
+        <!-- <div class="line" data-aos="fade-up" data-aos-duration="1000">
           <div class="profile">
             <img class="pic" src="../../assets/profile/mehran.jpg" alt />
             <p class="name">Mehran Ghajari</p>
@@ -99,7 +99,7 @@
               <br />
             </p>
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
 
