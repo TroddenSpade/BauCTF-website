@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     signedIn: false,
+    dark: false,
     leaderboard: []
   },
   getters: {
@@ -18,6 +19,9 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
+    darkMode(state, status) {
+      state.dark = status;
+    },
     signInStatus(state, status) {
       state.signedIn = status;
     },

@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="fake-navbar" v-show="isStuck || stickable"></div>
-    <div class="navbar" :class="{'sticky-navbar':isStuck || stickable}">
-      <img class="img" src="../assets/logo.png" />
+    <div class="navbar" :class="{'navbar_dark':dark,'sticky-navbar':isStuck || stickable}">
       <router-link to="/" tag="a" active-class="active" exact>HOME</router-link>
       <router-link to="/scoreboard" tag="a" active-class="active">SCOREBOARD</router-link>
       <router-link to="/challenges" tag="a" active-class="active">CHALLENGES</router-link>
@@ -22,11 +21,12 @@ export default {
   data: function() {
     return { isStuck: false };
   },
-  computed: mapState(["signedIn"]),
+  computed: mapState(["signedIn", "dark"]),
   methods: {
     handleScroll() {
       if (window.scrollY > window.innerHeight) {
         this.isStuck = true;
+        this.$store.commit("darkMode", true);
       } else {
         this.isStuck = false;
       }
@@ -46,6 +46,8 @@ export default {
 };
 </script>
 
+
+
 <style scoped>
 .navbar {
   height: 10vh;
@@ -53,7 +55,31 @@ export default {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-color: white;
+}
+
+.navbar_dark {
+  animation: convert linear 2s;
+  background-color: #1c1c1e;
+  color: #fefefe;
+}
+
+@keyframes convert {
+  0% {
+    background-color: #1c1c1e;
+    color: #fefefe;
+  }
+  5% {
+    background-color: white;
+    color: black;
+  }
+  20% {
+    background-color: white;
+    color: black;
+  }
+  40% {
+    background-color: #1c1c1e;
+    color: #fefefe;
+  }
 }
 
 .fake-navbar {

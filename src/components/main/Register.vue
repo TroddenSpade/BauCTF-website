@@ -1,5 +1,5 @@
 <template>
-  <div data-aos="fade-up" data-aos-duration="1000" class="main">
+  <div class="main">
     <h1>Would you like to participate ?</h1>
     <a class="link" :href="link" target="_blank">
       <img class="register" src="../../assets/register.png" alt />
@@ -20,8 +20,9 @@ export default {
 <style scoped>
 .main {
   width: 100vw;
-  height: 40vh;
+  height: 30vh;
   background-color: yellow;
+  /* color: #fefefe; */
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -50,6 +51,6 @@ export default {
 
 h1 {
   font-size: 3vw;
-  font-family: "Anton", sans-serif;
+  font-family: "Tomorrow", sans-serif;
 }
 </style>

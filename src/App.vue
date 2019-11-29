@@ -26,6 +26,8 @@ export default {
 <style >
 @import url("https://fonts.googleapis.com/css?family=Teko:700&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Tomorrow&display=swap");
+
 @font-face {
   font-family: "Arcade";
   font-style: normal;
@@ -33,6 +35,8 @@ export default {
 }
 body {
   margin: 0;
+  /* background-color: #1c1c1e; */
+  /* color: #fefefe; */
 }
 html {
   overflow: scroll;
