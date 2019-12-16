@@ -1,40 +1,44 @@
 <template>
-  <div class="main">
+  <div v-if="signedIn" class="main">
     <div class="challenge" v-for="(challenge, index) in challenges" :key="index">
       <button ref="buttons" class="collapsible" v-on:click="collapse(index)">
-        {{challenge.name}} ( {{challenge.point}} )
+        {{index+1}}. {{challenge.title}} ( {{challenge.score}} )
         <h4>{{challenge.author}}</h4>
       </button>
       <div class="content" ref="challenge">
         <p>{{challenge.body}}</p>
-        <a v-html="challenge.attach"></a>
-        <br />
-        <br />
-
-        <input class="name" type="text" placeholder="Your Team's Name" v-model="teams[index]" />
-        <br />
-        <input type="text" placeholder="CTF{...}" v-model="ctf[index]" />
-        <br />
+        <a :href="challenge.link" target="_blank">[&diams;link]</a>
+        <div style="margin: 10px 0 10px 0;"></div>
+        <div style="margin: 10px 0 10px 0;"></div>
+        <input type="text" class="ctf" placeholder="CTF{...}" v-model="ctf[index]" />
         <button class="submit" @click="submit(index)">Submit</button>
-        <br />
+        <div style="margin: 10px 0 10px 0;"></div>
       </div>
     </div>
+  </div>
+  <div v-else class="login">
+    <h1>
+      Login
+      <br />To
+      <br />Continue
+      <br />...
+    </h1>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import challenges from "../data/challenges.json";
+import { mapState } from "vuex";
+
 export default {
   name: "challenges",
   data: function() {
     return {
-      challenges,
-      isActive: Array(challenges.length).fill(0),
-      teams: Array(challenges.length).fill(""),
-      ctf: Array(challenges.length).fill("")
+      isActive: Array(15).fill(0),
+      ctf: Array(15).fill("")
     };
   },
+  computed: mapState(["signedIn", "challenges"]),
   methods: {
     collapse(i) {
       if (this.isActive[i]) {
@@ -47,7 +51,7 @@ export default {
       this.isActive[i] = 1 - this.isActive[i];
     },
     submit(index) {
-      if (this.ctf[index].length == 0 || this.teams[index].length == 0) {
+      if (this.ctf[index].length == 0) {
         return alert("Fill in All the Fields !");
       }
       if (
@@ -57,10 +61,10 @@ export default {
         return alert("Invalid CTF code");
       }
       axios
-        .post("http://localhost:5000/api/submit", {
-          id: index,
-          name: this.teams[index],
-          ctf: this.ctf[index]
+        .post("https://kntuctf.ir/api/submit.php", {
+          pid: index + 1,
+          ctf: this.ctf[index],
+          token: localStorage.getItem("token")
         })
         .then(response => {
           alert(response.data.msg);
@@ -69,6 +73,9 @@ export default {
           alert(err);
         });
     }
+  },
+  mounted: function() {
+    this.$store.dispatch("challenges");
   }
 };
 </script>
@@ -91,7 +98,7 @@ export default {
 }
 
 .collapsible {
-  font-family: "Anton", sans-serif;
+  font-family: "Tomorrow", sans-serif;
   background-color: lightgray;
   color: black;
   cursor: pointer;
@@ -145,10 +152,6 @@ export default {
   max-height: 50vh;
 }
 
-.name {
-  width: 30%;
-}
-
 .submit {
   width: 100px;
   height: 30px;
@@ -162,19 +165,41 @@ export default {
   cursor: pointer;
 }
 
+.login {
+  height: 90vh;
+  letter-spacing: 10px;
+  font-size: 40px;
+  /* color: yellow; */
+  font-family: "Teko", sans-serif;
+  text-shadow: 2px 0 black, 0 1px black, 2px 0 black, 0 2px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 70px;
+  background-image: radial-gradient(
+    ellipse farthest-corner at 2em 2em,
+    rgb(223, 223, 22),
+    rgb(223, 223, 22) 50%,
+    yellow 50%
+  );
+  background-size: 2em 2em;
+}
+
 input {
   padding: 8px 10px;
 }
 
+button {
+  margin: 0;
+}
+
 p {
-  font-family: "Teko", sans-serif;
-  font-size: 18px;
+  font-family: "Tomorrow", sans-serif;
 }
 
 h4 {
   font-family: "Arcade";
   font-size: 15px;
-  padding: 0;
   margin: 0;
 }
 

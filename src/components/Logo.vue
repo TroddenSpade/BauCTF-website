@@ -84,7 +84,7 @@ section {
   background-position: center center;
 }
 
-section::before {
+/* section::before {
   content: url();
   position: absolute;
   left: 0;
@@ -99,7 +99,7 @@ section::before {
   animation: glitch 4s linear infinite;
   -webkit-animation: glitch 4s infinite;
   -moz-animation: glitch 4s infinite;
-}
+} */
 
 @keyframes glitch {
   0% {

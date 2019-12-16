@@ -5,7 +5,7 @@
       <div class="members">
         <div class="line" data-aos="fade-up" data-aos-duration="1000">
           <div class="profile">
-            <img class="pic" src="../../assets/profile/sam.jpg" alt />
+            <img class="pic" src="../../assets/profile/sam.png" alt />
             <p class="name">Parsa Samadnejad</p>
             <p class="info">
               Leader
@@ -42,7 +42,7 @@
             <p class="info">Back-end Developer</p>
           </div>
           <div class="profile">
-            <img class="pic" src="../../assets/profile/sarah.jpg" alt />
+            <img class="pic" src="../../assets/profile/sarah.png" alt />
             <p class="name">Sarah Firouzabadi</p>
             <p class="info">
               Designer
@@ -104,7 +104,7 @@
     </div>
 
     <div class="contact">
-      <a target="_blank">
+      <a href="mailto:support@kntuctf.ir" target="_blank">
         <img class="logo" src="../../assets/gmail-logo.png" alt="gmail" />
       </a>
       <a href="https://t.me/kntuctf" target="_blank">

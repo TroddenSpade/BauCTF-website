@@ -18,7 +18,7 @@ export default {
   },
   data: function() {
     return {
-      link: "",
+      link: "https://evand.com/events/kntuctf",
       interv: "undefined",
       canChange: false,
       globalCount: 0,

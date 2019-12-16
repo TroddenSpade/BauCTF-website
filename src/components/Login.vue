@@ -2,11 +2,11 @@
   <div class="container" v-if="!signedIn">
     <h2>LOGIN</h2>
     <input class="name" type="text" placeholder="Your Team's Name" v-model="user" />
-    <br />
-    <input type="text" placeholder="Password" v-model="password" />
-    <br />
-    <br />
-    <button class="submit" @click="submit">SUBMIT</button>
+    <div style="margin: 10px 0 10px 0;"></div>
+    <input type="password" placeholder="Password" v-model="password" />
+    <div style="margin: 10px 0 10px 0;"></div>
+    <div style="margin: 10px 0 10px 0;"></div>
+    <button class="submit" @click="submit">LOGIN</button>
   </div>
   <div v-else class="container loggedin">
     <h1>
@@ -36,6 +36,9 @@ export default {
   computed: mapState(["signedIn"]),
   methods: {
     submit() {
+      if (this.user.length == 0 || this.password.length == 0) {
+        return alert("invalid username or password");
+      }
       this.$store.dispatch("signin", this.$data);
     }
   }

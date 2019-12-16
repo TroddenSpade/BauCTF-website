@@ -21,6 +21,16 @@
           :active-class="dark ? 'active_dark' : 'active'"
           v-if="!signedIn"
         >LOGIN</router-link>
+
+        <!-- -->
+        <!-- <a
+        class="login"
+        v-if="!signedIn"
+        href="https://evand.com/events/kntuctf"
+        target="_blank"
+        >REGISTER</a>-->
+        <!-- -->
+
         <a class="login" v-else @click="logout()">SIGN OUT</a>
       </div>
     </div>

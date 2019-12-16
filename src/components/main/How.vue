@@ -4,7 +4,7 @@
       <div class="glitch" data-text="How does it Work ?">How does it Work ?</div>
     </div>
     <div class="half2">
-      <p>Our Version of CTF is more based on solving intuitive challenges rather than skill-based challenges, so KNTU CTF is a team competition in which you have to get the highest score from 9 challenges, the score is decided by the number of challenges done and by the time each challenge has taken. the top 3 teams will also receive a prize from our prize pool.</p>
+      <p>Our Version of CTF is more based on solving intuitive challenges rather than skill-based challenges, so KNTU CTF is a team competition in which you have to get the highest score from all the challenges, the score is decided by the number of challenges done and by the time each challenge has taken.</p>
     </div>
   </div>
 </template>
