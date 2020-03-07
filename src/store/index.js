@@ -4,6 +4,8 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
+const pstate = 1;
+
 export const store = new Vuex.Store({
   state: {
     signedIn: false,
@@ -50,7 +52,7 @@ export const store = new Vuex.Store({
   actions: {
     signin({ commit }, data) {
       axios
-        .post("https://kntuctf.ir/api/sign_in.php", {
+        .post("http://kntuctf.ir/api/sign_in.php", {
           username: data.user,
           password: data.password
         })
@@ -58,6 +60,7 @@ export const store = new Vuex.Store({
           if (res.data) {
             localStorage.setItem("username", res.data.username);
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("open", res.data.open);
             commit("signInStatus", true);
             data.callback();
           }
@@ -70,8 +73,8 @@ export const store = new Vuex.Store({
     challenges({ commit, state }) {
       if (state.signedIn)
         axios
-          .post("https://kntuctf.ir/api/get_p.php", {
-            state: 0,
+          .post("http://kntuctf.ir/api/get_p.php", {
+            state: pstate,
             token: localStorage.getItem("token")
           })
           .then(res => {
@@ -84,12 +87,17 @@ export const store = new Vuex.Store({
             return alert(err);
           });
     },
-    leaderboard({ commit }) {
+    leaderboard({ commit }, { open, cb }) {
+      commit("leaderboard", []);
       axios
-        .get("https://kntuctf.ir/api/leaderboard.php")
-        .then(res => {
+        .post("http://kntuctf.ir/api/leaderboard.php", {
+          open: open,
+          state: pstate
+        })
+        .then(async res => {
           if (res.data) {
-            commit("leaderboard", res.data);
+            await commit("leaderboard", res.data);
+            cb();
           }
         })
         .catch(err => {
