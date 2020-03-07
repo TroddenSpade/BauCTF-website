@@ -1,24 +1,32 @@
 <template>
   <div>
     <div class="fake-navbar" v-show="isStuck || stickable"></div>
-    <div class="navbar" :class="{'navbar_dark':dark,'sticky-navbar':isStuck || stickable}">
-      <router-link to="/" tag="a" :active-class="dark ? 'active_dark' : 'active'" exact>HOME</router-link>
+    <div
+      class="navbar"
+      :class="{'navbar_dark':!stickable && dark,'dark':stickable || dark,'sticky-navbar':isStuck || stickable}"
+    >
+      <router-link
+        to="/"
+        tag="a"
+        :active-class="stickable || dark ? 'active_dark' : 'active'"
+        exact
+      >HOME</router-link>
       <router-link
         to="/scoreboard"
         tag="a"
-        :active-class="dark ? 'active_dark' : 'active'"
+        :active-class="stickable || dark ? 'dark' : 'active'"
       >SCOREBOARD</router-link>
       <router-link
         to="/challenges"
         tag="a"
-        :active-class="dark ? 'active_dark' : 'active'"
+        :active-class="stickable || dark ? 'dark' : 'active'"
       >CHALLENGES</router-link>
       <div class="status">
         <router-link
           to="/login"
           class="login"
           tag="a"
-          :active-class="dark ? 'active_dark' : 'active'"
+          :active-class="stickable || dark ? 'dark' : 'active'"
           v-if="!signedIn"
         >LOGIN</router-link>
 
@@ -41,7 +49,7 @@
 import { mapState } from "vuex";
 
 export default {
-  props: ["stickable"],
+  props: ["stickable", "fake"],
   data: function() {
     return { isStuck: false };
   },
@@ -58,6 +66,7 @@ export default {
     logout() {
       localStorage.removeItem("username");
       localStorage.removeItem("token");
+      localStorage.removeItem("open");
       this.$store.commit("signInStatus", false);
     }
   },
@@ -70,8 +79,6 @@ export default {
 };
 </script>
 
-
-
 <style scoped>
 .navbar {
   height: 10vh;
@@ -79,6 +86,12 @@ export default {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  background-color: white;
+}
+
+.dark {
+  background-color: #1c1c1e;
+  color: #fefefe;
 }
 
 .navbar_dark {
@@ -145,7 +158,6 @@ a {
   font-size: 3vh;
   text-decoration: none;
   color: grey;
-  /* text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black; */
 }
 
 a:not(.active):hover {
