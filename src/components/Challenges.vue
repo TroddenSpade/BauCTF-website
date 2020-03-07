@@ -1,16 +1,21 @@
 <template>
   <div v-if="signedIn" class="main">
+    <div v-if="challenges.length === 0">
+      <p>Has Not Started Yet</p>
+    </div>
     <div class="challenge" v-for="(challenge, index) in challenges" :key="index">
-      <button ref="buttons" class="collapsible" v-on:click="collapse(index)">
-        {{index+1}}. {{challenge.title}} ( {{challenge.score}} )
-        <h4>{{challenge.author}}</h4>
-      </button>
+      <button
+        ref="buttons"
+        class="collapsible"
+        v-on:click="collapse(index)"
+      >{{ index + 1 }} | {{ challenge.title }} ({{ challenge.score }})</button>
       <div class="content" ref="challenge">
-        <p>{{challenge.body}}</p>
+        <p>{{ challenge.body }}</p>
         <a :href="challenge.link" target="_blank">[&diams;link]</a>
         <div style="margin: 10px 0 10px 0;"></div>
         <div style="margin: 10px 0 10px 0;"></div>
         <input type="text" class="ctf" placeholder="CTF{...}" v-model="ctf[index]" />
+        <div style="margin: 10px 0 10px 0;"></div>
         <button class="submit" @click="submit(index)">Submit</button>
         <div style="margin: 10px 0 10px 0;"></div>
       </div>
@@ -28,6 +33,7 @@
 
 <script>
 import axios from "axios";
+import { sha256 } from "js-sha256";
 import { mapState } from "vuex";
 
 export default {
@@ -51,25 +57,21 @@ export default {
       this.isActive[i] = 1 - this.isActive[i];
     },
     submit(index) {
-      if (this.ctf[index].length == 0) {
-        return alert("Fill in All the Fields !");
-      }
-      if (
-        this.ctf[index].substring(0, 4) != "CTF{" ||
-        this.ctf[index].substr(-1) != "}"
-      ) {
+      if (this.ctf[index][3] != "{" || this.ctf[index].substr(-1) != "}") {
         return alert("Invalid CTF code");
       }
       axios
-        .post("https://kntuctf.ir/api/submit.php", {
+        .post("http://kntuctf.ir/api/submit.php", {
           pid: index + 1,
-          ctf: this.ctf[index],
-          token: localStorage.getItem("token")
+          ctf: sha256(this.ctf[index]),
+          token: localStorage.getItem("token"),
+          bare_code: this.ctf[index]
         })
         .then(response => {
           alert(response.data.msg);
         })
         .catch(err => {
+          if (err.response) return alert(err.response.data.error);
           alert(err);
         });
     }
@@ -80,27 +82,28 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .main {
   display: flex;
   flex: 1;
-  justify-content: center;
+  min-height: 90vh;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+  background-color: #1c1c1e;
 }
 
 .challenge {
   width: 80vw;
   border-bottom-width: 1px;
   border-bottom: solid;
-  border-bottom-color: grey;
+  border-bottom-color: #1c1c1e;
 }
 
 .collapsible {
   font-family: "Tomorrow", sans-serif;
-  background-color: lightgray;
-  color: black;
+  background-color: rgb(56, 56, 63);
+  color: white;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -118,6 +121,7 @@ export default {
 
 .collapsible:hover {
   background-color: yellow;
+  color: black;
 }
 
 .content {
@@ -128,12 +132,11 @@ export default {
   overflow: hidden;
   max-height: 0;
   transition: max-height 0.5s ease-out;
-  background-color: #f1f1f1;
+  background-color: rgb(56, 56, 63);
 }
 
 .collapsed {
   font-size: 35px;
-  background-color: #f1f1f1;
 }
 
 .collapsed > h4 {
@@ -141,7 +144,8 @@ export default {
 }
 
 .collapsed:hover {
-  background-color: #f1f1f1;
+  background-color: rgb(56, 56, 63);
+  color: white;
 }
 
 .collapsed:active {
@@ -195,6 +199,7 @@ button {
 
 p {
   font-family: "Tomorrow", sans-serif;
+  color: white;
 }
 
 h4 {
