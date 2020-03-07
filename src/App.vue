@@ -1,14 +1,19 @@
 <template>
   <div>
-    <Header v-show="$route.path != '/'" :stickable="$route.path!= '/'" />
+    <Header v-show="$route.path != '/' " :stickable="$route.path!= '/'" />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header";
+
+import { mapState } from "vuex";
+
 export default {
   name: "app",
+  computed: mapState(["dark"]),
+
   created: function() {
     if (localStorage.getItem("username") && localStorage.getItem("token")) {
       this.$store.commit("signInStatus", true);
