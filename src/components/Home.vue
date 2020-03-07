@@ -1,7 +1,7 @@
 <template>
   <div>
     <Logo />
-    <Header />
+    <Header :stickable="false" />
     <Main />
   </div>
 </template>

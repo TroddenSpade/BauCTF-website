@@ -128,7 +128,7 @@ export default {
 .glitch::after {
   content: attr(data-text);
   position: absolute;
-  left: 2px;
+  left: 0px;
   text-shadow: -1px 0 red;
   top: 0;
   width: fit-content;

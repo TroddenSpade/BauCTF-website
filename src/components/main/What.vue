@@ -1,7 +1,7 @@
 <template>
   <div class="main" :class="{'main_dark':dark}">
     <div class="half1">
-      <div class="glitch" data-text="What is CTF ?">What is CTF ?</div>
+      <div class="glitch" data-text="WTF is CTF ?">WTF is CTF ?</div>
     </div>
     <div class="half2">
       <p>CTF (Capture The Flag) is a competition in which contestants have to solve a variety of tasks ranging from basic to expert programming exercises, such as file scavenging or decrypting a message. In these challenges, the contestant is usually asked to find a specific string that may be hidden on the server or behind a webpage. This goal is called the flag, hence the name!</p>
@@ -103,7 +103,7 @@ export default {
 .glitch::after {
   content: attr(data-text);
   position: absolute;
-  left: 2px;
+  left: 0px;
   text-shadow: -1px 0 red;
   top: 0;
   width: fit-content;
@@ -227,6 +227,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  min-width: 200px;
   margin: 5vw;
 }
 

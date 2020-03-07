@@ -3,9 +3,10 @@
     <div class="crack">
       <p class="p">Would you like to participate ?</p>
     </div>
-    <a class="link" :href="link" target="_blank">
-      <img class="register" src="../../assets/register.png" alt />
-    </a>
+    <div class="block">
+      <a class="link" :href="openLink" target="_blank">Open Register</a>
+      <a class="link" :href="link" target="_blank">KNTU Register</a>
+    </div>
   </div>
 </template>
 
@@ -14,11 +15,17 @@ export default {
   mounted: function() {
     this.word = this.$el.getElementsByClassName("p")[0];
     this.INITIAL_WORD = this.$el.getElementsByClassName("p")[0].innerHTML;
-    this.$el.querySelector("a").addEventListener("mouseenter", this.init);
+    this.$el
+      .getElementsByClassName("link")[0]
+      .addEventListener("mouseenter", this.init);
+    this.$el
+      .getElementsByClassName("link")[1]
+      .addEventListener("mouseenter", this.init);
   },
   data: function() {
     return {
       link: "https://evand.com/events/kntuctf",
+      openLink: "http://kntuctf.ir/#/Register",
       interv: "undefined",
       canChange: false,
       globalCount: 0,
@@ -120,16 +127,21 @@ export default {
 <style scoped>
 .main {
   width: 100vw;
+  min-height: 20vh;
   background-color: yellow;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   flex-flow: row wrap;
+  padding: 10px 0;
 }
 
 .link {
   border: solid;
-  border-width: 5px;
+  font-size: 1.5em;
+  font-family: "Teko";
+  text-decoration: none;
+  border-width: 3px;
   padding: 5px;
   border-width: 3px;
   border-radius: 10px;
@@ -154,6 +166,7 @@ export default {
 }
 
 p {
+  margin: 0;
   font-size: 3em;
   font-family: "Tomorrow", sans-serif;
 }

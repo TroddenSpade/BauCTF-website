@@ -3,7 +3,7 @@
     <div class="team" :class="{'team_dark':dark}">
       <div class="glitch" data-text="OUR TEAM">OUR TEAM</div>
       <div class="members">
-        <div class="line" data-aos="fade-up" data-aos-duration="1000">
+        <div class="line">
           <div class="profile">
             <img class="pic" src="../../assets/profile/sam.png" alt />
             <p class="name">Parsa Samadnejad</p>
@@ -14,27 +14,9 @@
             </p>
           </div>
           <div class="profile">
-            <img class="pic" src="../../assets/profile/reza.jpg" alt />
-            <p class="name">Reza Liaghat</p>
-            <p class="info">
-              Challenge Designer
-              <br />Content Creator
-            </p>
-          </div>
-          <div class="profile">
             <img class="pic" src="../../assets/profile/mahdi.jpg" alt />
             <p class="name">Mahdi Mahmoodian</p>
             <p class="info">Executive Director</p>
-          </div>
-        </div>
-        <div class="line" data-aos="fade-up" data-aos-duration="1000">
-          <div class="profile">
-            <img class="pic" src="../../assets/profile/parsa.jpg" alt />
-            <p class="name">Parsa Mazaheri</p>
-            <p class="info">
-              Challenge Designer
-              <br />Executive staff
-            </p>
           </div>
           <div class="profile">
             <img class="pic" src="../../assets/profile/kazemi.jpg" alt />
@@ -44,62 +26,9 @@
           <div class="profile">
             <img class="pic" src="../../assets/profile/sarah.png" alt />
             <p class="name">Sarah Firouzabadi</p>
-            <p class="info">
-              Designer
-              <br />Executive staff
-            </p>
+            <p class="info">Designer</p>
           </div>
-          <!-- <div class="profile">
-            <img class="pic" src="../../assets/profile/rambod.jpg" alt />
-            <p class="name">Rambod Azimi</p>
-            <p class="info">
-              Content Creator
-              <br />
-            </p>
-          </div>
-          <div class="profile">
-            <img class="pic" src="../../assets/profile/elahi.jpg" alt />
-            <p class="name">Ali Elahi</p>
-            <p class="info">
-              Public Relations
-              <br />
-            </p>
-          </div>-->
         </div>
-        <!-- <div class="line" data-aos="fade-up" data-aos-duration="1000">
-          <div class="profile">
-            <img class="pic" src="../../assets/profile/mehran.jpg" alt />
-            <p class="name">Mehran Ghajari</p>
-            <p class="info">
-              Executive staff
-              <br />
-            </p>
-          </div>
-          <div class="profile">
-            <img class="pic" src="../../assets/profile/ana.jpg" alt />
-            <p class="name">Anahita Ahmadgoli</p>
-            <p class="info">
-              Executive staff
-              <br />
-            </p>
-          </div>
-          <div class="profile">
-            <img class="pic" src="../../assets/profile/kolagar.png" alt />
-            <p class="name">M Reza Kolagar</p>
-            <p class="info">
-              Executive staff
-              <br />
-            </p>
-          </div>
-          <div class="profile">
-            <img class="pic" src="../../assets/profile/arman.jpg" alt />
-            <p class="name">Arman Takestani</p>
-            <p class="info">
-              Executive staff
-              <br />
-            </p>
-          </div>
-        </div>-->
       </div>
     </div>
 
@@ -119,7 +48,7 @@
     </div>
 
     <div class="bottom">
-      <p class="copy">Copyright © 2019 KNTU CTF</p>
+      <p class="copy">Copyright © 2020 3P1X</p>
     </div>
   </div>
 </template>
@@ -135,7 +64,6 @@ export default {
 
 <style scoped>
 .main {
-  min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -185,6 +113,7 @@ export default {
   font-size: 3.5em;
   position: relative;
   margin: 5vh;
+  min-width: 300px;
 }
 
 @keyframes noise-anim {
