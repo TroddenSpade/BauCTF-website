@@ -1,47 +1,45 @@
 <template>
-  <div>
+  <div class="layout">
     <div class="fake-navbar" v-show="isStuck || stickable"></div>
     <div
       class="navbar"
-      :class="{'navbar_dark':!stickable && dark,'dark':stickable || dark,'sticky-navbar':isStuck || stickable}"
+      :class="{
+        navbar_dark: !stickable && dark,
+        dark: stickable || dark,
+        'sticky-navbar': isStuck || stickable
+      }"
     >
-      <router-link
+      <g-link
+        class="link"
         to="/"
         tag="a"
         :active-class="stickable || dark ? 'active_dark' : 'active'"
         exact
-      >HOME</router-link>
-      <router-link
+      >HOME</g-link>
+      <g-link
+        class="link"
         to="/scoreboard"
         tag="a"
         :active-class="stickable || dark ? 'dark' : 'active'"
-      >SCOREBOARD</router-link>
-      <router-link
+      >SCOREBOARD</g-link>
+      <g-link
+        class="link"
         to="/challenges"
         tag="a"
         :active-class="stickable || dark ? 'dark' : 'active'"
-      >CHALLENGES</router-link>
+      >CHALLENGES</g-link>
       <div class="status">
-        <router-link
-          to="/login"
+        <g-link
           class="login"
+          to="/login"
           tag="a"
           :active-class="stickable || dark ? 'dark' : 'active'"
           v-if="!signedIn"
-        >LOGIN</router-link>
-
-        <!-- -->
-        <!-- <a
-        class="login"
-        v-if="!signedIn"
-        href="https://evand.com/events/kntuctf"
-        target="_blank"
-        >REGISTER</a>-->
-        <!-- -->
-
-        <a class="login" v-else @click="logout()">SIGN OUT</a>
+        >LOGIN</g-link>
+        <a class="login link" v-else @click="logout()">SIGN OUT</a>
       </div>
     </div>
+    <slot />
   </div>
 </template>
 
@@ -49,7 +47,7 @@
 import { mapState } from "vuex";
 
 export default {
-  props: ["stickable", "fake"],
+  props: ["stickable"],
   data: function() {
     return { isStuck: false };
   },
@@ -71,13 +69,21 @@ export default {
     }
   },
   created: function() {
-    window.addEventListener("scroll", this.handleScroll);
+    if (!this.stickable) window.addEventListener("scroll", this.handleScroll);
   },
   destroyed: function() {
-    window.removeEventListener("scroll", this.handleScroll);
+    if (!this.stickable)
+      window.removeEventListener("scroll", this.handleScroll);
   }
 };
 </script>
+<static-query>
+query {
+  metadata {
+    siteName
+  }
+}
+</static-query>
 
 <style scoped>
 .navbar {
@@ -95,25 +101,17 @@ export default {
 }
 
 .navbar_dark {
-  animation: convert linear 2s;
+  animation: convert linear 0.5s;
   background-color: #1c1c1e;
   color: #fefefe;
 }
 
 @keyframes convert {
   0% {
-    background-color: #1c1c1e;
-    color: #fefefe;
-  }
-  5% {
     background-color: white;
     color: black;
   }
-  20% {
-    background-color: white;
-    color: black;
-  }
-  40% {
+  100% {
     background-color: #1c1c1e;
     color: #fefefe;
   }
@@ -123,10 +121,8 @@ export default {
   height: 10vh;
 }
 
-p,
 .login {
   font-family: "Teko", sans-serif;
-
   font-size: 18px;
   color: yellow;
   text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black;
@@ -153,14 +149,14 @@ p,
   align-content: center;
 }
 
-a {
+.link {
   font-family: "Teko", sans-serif;
   font-size: 3vh;
   text-decoration: none;
   color: grey;
 }
 
-a:not(.active):hover {
+.link:not(.active):hover {
   color: lightgrey;
 }
 

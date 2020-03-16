@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css?family=Teko:700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Tomorrow&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap");
+
+body {
+  margin: 0;
+}
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+button:focus {
+  outline: 0;
+}

@@ -1,27 +1,16 @@
-import Vue from "vue";
-import App from "./App.vue";
-import AOS from "aos";
-import VueRouter from "vue-router";
+// This is the main.js file. Import global CSS and scripts here.
+// The Client API can be used here. Learn more: gridsome.org/docs/client-api
 
-import { store } from "./store/index.js";
-import { routes } from "./routes";
-import "aos/dist/aos.css";
+import "~/assets/index.css";
 
-Vue.use(VueRouter);
+import Vuex from "vuex";
 
-const router = new VueRouter({
-  routes,
-  scrollBehavior() {
-    return { x: 0, y: 0 };
-  }
-});
+import HeadertLayout from "~/layouts/Header.vue";
+import { store } from "~/store";
 
-new Vue({
-  store,
-  el: "#app",
-  router,
-  created() {
-    AOS.init();
-  },
-  render: h => h(App)
-});
+export default function(Vue, { router, head, isClient, appOptions }) {
+  // Set default layout as a global component
+  Vue.component("Layout", HeadertLayout);
+  Vue.use(Vuex);
+  appOptions.store = store;
+}

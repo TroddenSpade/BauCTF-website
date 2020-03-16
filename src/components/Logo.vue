@@ -4,13 +4,12 @@
     <canvas id="c"></canvas>
 
     <section></section>
-    <img class="down" src="../assets/down.png" />
+    <g-image class="down" src="~/assets/image/down.png" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "logo",
   mounted: function() {
     // geting canvas by Boujjou Achraf
     var c = document.getElementById("c");
@@ -44,7 +43,6 @@ export default {
         drops[i]++;
       }
     }
-
     setInterval(draw, 30);
   }
 };
@@ -69,6 +67,7 @@ export default {
   top: 90%;
   position: absolute;
   height: 3vh;
+  width: auto;
   animation: scrollDown 2s infinite;
   -webkit-animation: scrollDown 2s infinite;
   -moz-animation: scrollDown 2s infinite;
@@ -78,7 +77,7 @@ section {
   position: absolute;
   height: 70vh;
   width: 80vw;
-  background-image: url(../assets/logo.png);
+  background-image: url(../assets/image/logo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
