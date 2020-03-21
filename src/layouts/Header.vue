@@ -36,7 +36,7 @@
           :active-class="stickable || dark ? 'dark' : 'active'"
           v-if="!signedIn"
         >LOGIN</g-link>
-        <a class="login link" v-else @click="logout()">SIGN OUT</a>
+        <a class="login" v-else @click="logout()">SIGN OUT</a>
       </div>
     </div>
     <slot />
@@ -62,10 +62,7 @@ export default {
       }
     },
     logout() {
-      localStorage.removeItem("username");
-      localStorage.removeItem("token");
-      localStorage.removeItem("open");
-      this.$store.commit("signInStatus", false);
+      this.$store.dispatch("signOut");
     }
   },
   created: function() {
