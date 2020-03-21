@@ -16,7 +16,12 @@
           <p>Before proceeding, please check your email for a verification link.</p>
           <p>
             If you did not receive the email,
-            <a @click="resend" class="resend">click here</a> to request another.
+            <a
+              class="resend"
+              @click="resend"
+              v-if="!loading"
+            >click here</a>
+            <a class="sending" v-else>click here</a> to request another.
           </p>
         </div>
       </div>
@@ -38,21 +43,18 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      token: localStorage.getItem("token")
+      token: localStorage.getItem("token"),
+      loading: false
     };
   },
   computed: mapState(["signedIn"]),
-  method: {
-    resend() {
-      axios
-        .get("http://localhost:8000/api/email/resend", {
-          headers: {
-            Accept: "application/json",
-            Authorization: "Bearer " + this.token
-          }
-        })
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
+  methods: {
+    resend: function() {
+      this.loading = true;
+      this.$store.dispatch("resend", {
+        ...this.$data,
+        finally: () => (this.loading = false)
+      });
     }
   }
 };
@@ -99,5 +101,10 @@ export default {
   color: yellow;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.sending {
+  font-family: "Tomorrow";
+  color: grey;
 }
 </style>
