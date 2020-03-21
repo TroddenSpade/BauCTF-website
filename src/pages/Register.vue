@@ -6,19 +6,31 @@
       <div class="register">
         <div class="panel">
           <g-image class="img" src="~/assets/image/logo.png" />
-          <h2 class="title">Welcome To KNTU CTF</h2>
+          <div>
+            <p>Hosted by 3P1X KNTU CTF Team</p>
+          </div>
         </div>
         <div class="inputs">
+          <vue-recaptcha
+            sitekey="6LcFX-EUAAAAAHXcib6qmnXt2QJTqR5S35UFoaUw"
+            theme="dark"
+            size="invisible"
+            ref="recaptcha"
+            @verify="onVerify"
+            @expired="onExpired"
+            @error="onError"
+            :loadRecaptchaScript="true"
+          />
           <h1 class="title">Register Now</h1>
           <div class="inside-inputs">
             <div class="block">
               <g-image class="svg" src="~/assets/svgs/users-solid.svg" alt />
-              <input class="text-box" type="text" placeholder="Your Team's Name" v-model="name" />
+              <input class="text-box" type="text" placeholder="Your Team's Name *" v-model="name" />
             </div>
 
             <div class="block">
               <g-image class="svg" src="~/assets/svgs/envelope-solid.svg" alt />
-              <input class="text-box" type="text" placeholder="Email" v-model="email" />
+              <input class="text-box" type="text" placeholder="Email *" v-model="email" />
             </div>
             <div class="block">
               <g-image class="svg" src="~/assets/svgs/flag-solid.svg" alt />
@@ -31,28 +43,18 @@
             </div>
             <div class="block">
               <g-image class="svg" src="~/assets/svgs/key-solid.svg" alt />
-              <input class="text-box" type="text" placeholder="Password" v-model="password" />
+              <input class="text-box" type="password" placeholder="Password *" v-model="password" />
             </div>
 
             <div class="block">
               <g-image class="svg" src="~/assets/svgs/unlock-solid.svg" alt />
               <input
                 class="text-box"
-                type="text"
-                placeholder="Password Confirmation"
+                type="password"
+                placeholder="Password Confirmation *"
                 v-model="password_confirmation"
               />
             </div>
-            <vue-recaptcha
-              sitekey="6LcFX-EUAAAAAHXcib6qmnXt2QJTqR5S35UFoaUw"
-              theme="dark"
-              size="invisible"
-              ref="recaptcha"
-              @verify="onVerify"
-              @expired="onExpired"
-              @error="onError"
-              :loadRecaptchaScript="true"
-            />
 
             <div class="submit-cont">
               <div v-if="this.loading" class="lds-ring" key="spinner">
@@ -103,8 +105,7 @@ export default {
 
       this.checker()
         .then(() => {
-          if (this.captcha) this.onVerify();
-          else this.$refs.recaptcha.execute();
+          this.$refs.recaptcha.execute();
         })
         .catch(err => {
           this.loading = false;
@@ -112,7 +113,7 @@ export default {
         });
     },
     onVerify: function(response) {
-      if (response) this.captcha = response;
+      this.captcha = response;
 
       this.send()
         .then(async res => {
@@ -122,6 +123,7 @@ export default {
           });
         })
         .catch(err => {
+          this.resetRecaptcha();
           if (err.response) return alert(err.response.data.message);
           return alert(err);
         })
@@ -135,6 +137,7 @@ export default {
       this.captcha = null;
     },
     resetRecaptcha() {
+      this.captcha = null;
       this.$refs.recaptcha.reset();
     },
     checker() {
@@ -213,13 +216,14 @@ export default {
 }
 
 .panel {
+  /* background-color: white; */
   width: 30%;
   height: 100%;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   display: flex;
   flex-flow: column wrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   font-family: "Teko";
 }
@@ -384,6 +388,7 @@ export default {
 .lds-ring div:nth-child(3) {
   animation-delay: -0.15s;
 }
+
 @keyframes lds-ring {
   0% {
     transform: rotate(0deg);
