@@ -4,6 +4,7 @@
 import "~/assets/index.css";
 
 import Vuex from "vuex";
+import axios from "axios";
 
 import HeadertLayout from "~/layouts/Header.vue";
 import { store } from "~/store";
@@ -13,4 +14,5 @@ export default function(Vue, { router, head, isClient, appOptions }) {
   Vue.component("Layout", HeadertLayout);
   Vue.use(Vuex);
   appOptions.store = store;
+  appOptions.store.dispatch("autoLogin");
 }
