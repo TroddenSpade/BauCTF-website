@@ -5,6 +5,7 @@
     </div>
 
     <div class="main-logo">
+      <g-image id="icon" src="~/assets/image/logo.png" />
       <g-image id="down" class="down" src="~/assets/image/double-down-64.png" />
     </div>
 
@@ -51,8 +52,16 @@
       </div>
 
       <div class="team-container">
-        <div class="event">
-          <h1>EVENT</h1>
+        <div class="event" v-if="latestEvent != null">
+          <div class="event-top">
+            <h1>Latest Event</h1>
+            <a class="button" href="/register">REGISTER NOW</a>
+          </div>
+          <div class="event-info">
+            <h2>{{latestEvent.name}}</h2>
+            <h3>{{latestEvent.type}} - {{latestEvent.format}}</h3>
+            <h3>{{latestEvent.start}} -- {{latestEvent.end}}</h3>
+          </div>
         </div>
 
         <div class="team" :class="{'team_dark':dark}">
@@ -118,9 +127,10 @@ export default {
   metaInfo: {
     title: "KNTU CTF"
   },
-  computed: mapState(["dark"]),
+  computed: mapState(["dark", "latestEvent"]),
   components: {},
   mounted: function() {
+    this.$store.dispatch("latestEvent");
     // geting canvas by Boujjou Achraf
     var c = document.getElementById("c");
     var ctx = c.getContext("2d");
@@ -175,6 +185,57 @@ export default {
 </script>
 
 <style scoped>
+.event-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button {
+  background: var(--second-color);
+  color: var(--background-dark);
+  text-transform: uppercase;
+  border: none;
+  padding: 0.7em 1em;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  font-family: "Tomorrow", sans-serif;
+  transition: 1s;
+}
+
+.button:hover {
+  background-color: white;
+}
+
+.event {
+  width: 80%;
+  font-family: "Tomorrow", sans-serif;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.event-top > h1 {
+  color: var(--second-color);
+}
+
+.event-top > h1 {
+  color: var(--second-color);
+}
+
+.event-info {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.event-info > h3 {
+  margin: 5px;
+}
+
 .home-links a {
   margin-right: 1rem;
 }
@@ -464,7 +525,7 @@ export default {
 
 .profile:hover .name {
   background-color: rgb(20, 148, 20);
-  color: #1a1a1a;
+  color: var(--background-dark);
   transition: background-color 1s;
 }
 
@@ -485,9 +546,9 @@ export default {
   border: solid;
   border-width: 0px;
   border-radius: 5px;
-  margin: 7px;
-  padding-left: 3px;
-  padding-right: 3px;
+  margin: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .info {
