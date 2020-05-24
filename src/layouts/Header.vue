@@ -4,39 +4,59 @@
     <div
       class="navbar"
       :class="{
-        navbar_dark: !stickable && dark,
-        dark: stickable || dark,
+        'dark': stickable ,
+        'navbar_dark': !stickable && dark,
         'sticky-navbar': isStuck || stickable
       }"
     >
-      <g-link
-        class="link"
-        to="/"
-        tag="a"
-        :active-class="stickable || dark ? 'active_dark' : 'active'"
-        exact
-      >HOME</g-link>
-      <g-link
-        class="link"
-        to="/scoreboard"
-        tag="a"
-        :active-class="stickable || dark ? 'dark' : 'active'"
-      >SCOREBOARD</g-link>
-      <g-link
-        class="link"
-        to="/challenges"
-        tag="a"
-        :active-class="stickable || dark ? 'dark' : 'active'"
-      >CHALLENGES</g-link>
-      <div class="status">
-        <g-link
-          class="login"
-          to="/login"
-          tag="a"
-          :active-class="stickable || dark ? 'dark' : 'active'"
-          v-if="!signedIn"
-        >LOGIN</g-link>
-        <a class="login" v-else @click="logout()">SIGN OUT</a>
+      <ul class="links" ref="links">
+        <li>
+          <g-link
+            class="link"
+            to="/"
+            tag="a"
+            :active-class="stickable || dark ? 'active_dark' : 'active'"
+            exact
+          >HOME</g-link>
+        </li>
+        <li>
+          <g-link
+            class="link"
+            to="/scoreboard"
+            tag="a"
+            :active-class="stickable || dark ? 'active_dark' : 'active'"
+          >SCOREBOARD</g-link>
+        </li>
+        <li>
+          <g-link
+            class="link"
+            to="/challenges"
+            tag="a"
+            :active-class="stickable || dark ? 'active_dark' : 'active'"
+          >CHALLENGES</g-link>
+        </li>
+        <li>
+          <g-link
+            class="login link"
+            to="/login"
+            tag="a"
+            :active-class="stickable || dark ? 'active_dark' : 'active'"
+            v-if="!signedIn"
+          >LOGIN</g-link>
+          <g-link class="login" v-else to="/dashboard">Dashboard</g-link>
+        </li>
+      </ul>
+      <div class="icon-container">
+        <g-image
+          href="javascript:void(0);"
+          :class="{
+        icon: true,
+        'image-dark': stickable || dark,
+        }"
+          @click="collapse"
+          :active-class="stickable || dark ? 'active_dark' : 'active'"
+          src="~/assets/svgs/bars-solid.svg"
+        />
       </div>
     </div>
     <slot />
@@ -61,8 +81,9 @@ export default {
         this.isStuck = false;
       }
     },
-    logout() {
-      this.$store.dispatch("signOut");
+    collapse() {
+      var x = this.$refs.links;
+      x.classList.toggle("links-active");
     }
   },
   created: function() {
@@ -74,60 +95,43 @@ export default {
   }
 };
 </script>
-<static-query>
-query {
-  metadata {
-    siteName
-  }
-}
-</static-query>
+
 
 <style scoped>
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 .navbar {
-  height: 10vh;
+  height: 8vh;
   display: flex;
-  flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  min-width: 8vh;
   background-color: white;
+  font-family: "Teko";
+  font-size: 1.3rem;
 }
 
 .dark {
-  background-color: #1c1c1e;
-  color: #fefefe;
+  background-color: var(--background-dark);
+  animation: shadow linear 0.5s forwards;
 }
 
 .navbar_dark {
-  animation: convert linear 0.5s;
-  background-color: #1c1c1e;
-  color: #fefefe;
+  animation: convert linear 0.5s, shadow linear 0.5s forwards;
+  background-color: var(--background-dark);
 }
 
-@keyframes convert {
-  0% {
-    background-color: white;
-    color: black;
+@keyframes shadow {
+  from {
   }
-  100% {
-    background-color: #1c1c1e;
-    color: #fefefe;
+  to {
+    -webkit-box-shadow: 6px 6px 4px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 6px 6px 4px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 6px 6px 4px 0px rgba(0, 0, 0, 0.75);
   }
-}
-
-.fake-navbar {
-  height: 10vh;
-}
-
-.login {
-  font-family: "Teko", sans-serif;
-  font-size: 18px;
-  color: yellow;
-  text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black;
-  cursor: pointer;
-}
-
-.img {
-  height: 10vh;
 }
 
 .sticky-navbar {
@@ -135,26 +139,39 @@ query {
   top: 0%;
   z-index: 1;
   width: 100%;
-  border-bottom: solid yellow;
-  border-bottom-width: 3px;
 }
 
-.status {
-  width: 10%;
+.fake-navbar {
+  height: 8vh;
+}
+
+.links {
+  box-sizing: border-box;
   display: flex;
-  justify-content: center;
-  align-content: center;
+  width: 100%;
+  justify-content: space-around;
+  font-weight: bold;
+}
+
+.links li {
+  list-style-type: none;
+  display: flex;
 }
 
 .link {
   font-family: "Teko", sans-serif;
-  font-size: 3vh;
   text-decoration: none;
   color: grey;
 }
 
-.link:not(.active):hover {
+.link:not(.active_dark):hover {
   color: lightgrey;
+}
+
+.icon {
+  display: none;
+  max-width: 3vh;
+  cursor: pointer;
 }
 
 .active {
@@ -164,5 +181,77 @@ query {
 
 .active_dark {
   color: #fefefe;
+}
+
+.logo {
+  max-width: 10vh;
+}
+
+.image-dark {
+  animation: convert-image 0.5s forwards;
+}
+
+@keyframes convert {
+  0% {
+    background-color: white;
+    color: black;
+  }
+  100% {
+    background-color: var(--background-dark);
+    color: #fefefe;
+  }
+}
+
+@keyframes convert-image {
+  0% {
+  }
+  100% {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .links {
+    position: relative;
+    height: 92vh;
+    left: 40%;
+    background-color: var(--background-dark);
+    top: 50vh;
+    width: 50%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in;
+  }
+  .icon {
+    display: block;
+  }
+
+  .icon-container {
+    display: flex;
+    justify-content: center;
+    width: 10%;
+  }
+
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    width: 30%;
+  }
+}
+
+.links-active {
+  transform: translateX(0%);
+}
+
+.login {
+  color: rgb(20, 148, 20);
+  text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black;
 }
 </style>
