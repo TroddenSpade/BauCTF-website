@@ -1,28 +1,58 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import moment from "moment";
 
 Vue.use(Vuex);
 
-const pstate = 1;
+import login_actions from "./login-actions";
+import score_actions from "./score-actions";
+import event_actions from "./event-actions";
+import challenge_actions from "./challenge-actions";
+
+import { USER } from "./links";
 
 export const store = new Vuex.Store({
   state: {
     signedIn: false,
     dark: false,
+    latestEvent: null,
+    user: {},
+    scoreboard_data: [],
+    challenges: [],
+    events: [],
     leaderboard: [],
-    challenges: []
+    submissions: [],
+    categories: ["WEB", "REV", "CRYP", "PWN", "MISC"],
   },
   getters: {
     signedIn(state) {
       return state.signedIn;
     },
-    leaderboard(state) {
-      return state.leaderboard;
+    scoreboard(state) {
+      return state.scoreboard_data;
     },
     challenges(state) {
       return state.challenges;
-    }
+    },
+    latestEvent(state) {
+      return state.latestEvent;
+    },
+    events(state) {
+      return state.events;
+    },
+    categories(state) {
+      return state.categories;
+    },
+    leaderboard(state) {
+      return state.leaderboard;
+    },
+    user(state) {
+      return state.user;
+    },
+    submissions(state) {
+      return state.submissions;
+    },
   },
   mutations: {
     darkMode(state, status) {
@@ -31,193 +61,69 @@ export const store = new Vuex.Store({
     signInStatus(state, status) {
       state.signedIn = status;
     },
-    leaderboard(state, leaderboard) {
+    latestEvent(state, status) {
+      state.latestEvent = status.event;
+    },
+    scoreboard(state, scoreboard_data) {
       function compare(a, b) {
-        if (a.total_score > b.total_score) return -1;
-        if (b.total_score > a.total_score) return 1;
-
-        if (a.total_ts > b.total_ts) return 1;
-        if (a.total_ts < b.total_ts) return -1;
-
+        if (a.score > b.score) return -1;
+        if (b.score > a.score) return 1;
+        if (a.time > b.time) return 1;
+        if (a.time < b.time) return -1;
         return 0;
       }
-
-      leaderboard.sort(compare);
-      state.leaderboard = leaderboard;
+      scoreboard_data.participants = Object.values(
+        scoreboard_data.participants
+      ).sort(compare);
+      state.scoreboard_data = scoreboard_data;
     },
+
     challenges(state, challenges) {
       state.challenges = challenges;
-    }
+    },
+    events(state, events) {
+      events.forEach((e) => {
+        var end = moment.utc(e.end, "ddd, D-MMM-YYYY HH:mm");
+        let now = moment().toDate();
+        e.disabled = now > end ? 1 : 0;
+      });
+      state.events = events;
+    },
+    leaderboard(state, leaderboard) {
+      state.leaderboard = leaderboard;
+    },
+    user(state, user) {
+      state.user = user;
+    },
+    submissions(state, submissions) {
+      submissions.forEach((e) => {
+        e.created_at = moment.unix(e.created_at).fromNow();
+      });
+      state.submissions = submissions;
+    },
   },
   actions: {
-    clearStorage() {
-      localStorage.removeItem("expires_in");
-      localStorage.removeItem("token");
-      localStorage.removeItem("setDate");
-    },
-
-    signOut({ commit, dispatch }) {
+    ...login_actions,
+    ...score_actions,
+    ...event_actions,
+    ...challenge_actions,
+    user({ commit }) {
       axios
-        .get("http://localhost:8000/api/logout", {
+        .get(USER, {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token")
-          }
-        })
-        .catch(err => console.log(err.response))
-        .finally(() => {
-          dispatch("clearStorage");
-          commit("signInStatus", false);
-        });
-    },
-
-    autoLogin({ commit, dispatch }) {
-      if (
-        localStorage.getItem("token") &&
-        localStorage.getItem("expires_in") &&
-        localStorage.getItem("setDate")
-      ) {
-        let e = parseInt(localStorage.getItem("expires_in"));
-        let d = new Date(localStorage.getItem("setDate"));
-        let now = new Date();
-
-        let diff = Math.abs(now.getTime() - d.getTime());
-        var secs = Math.ceil(diff / 1000);
-
-        if (secs >= e)
-          axios
-            .post(
-              "http://localhost:8000/api/autologin",
-              {
-                email: localStorage.getItem("token"),
-                id: localStorage.getItem("id")
-              },
-              {
-                headers: {
-                  Accept: "application/json",
-                  Authorization: "Bearer " + localStorage.getItem("token")
-                }
-              }
-            )
-            .then(res => {
-              if (res.data) {
-                localStorage.setItem("id", res.data.user.id);
-                localStorage.setItem("token", res.data.access_token);
-                localStorage.setItem("email", res.data.user.email);
-                localStorage.setItem("setDate", new Date());
-                commit("signInStatus", true);
-              }
-            })
-            .catch(err => {
-              data.catch();
-              if (err.response) return alert(err.response.data.message);
-              return alert(err);
-            })
-            .finally(data.finally);
-        else {
-          commit("signInStatus", true);
-        }
-      }
-    },
-
-    login({ commit, dispatch }, data) {
-      axios
-        .post(
-          "http://localhost:8000/api/login",
-          {
-            email: data.email,
-            password: data.password,
-            captcha: data.captcha
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
-          { withCredentials: true }
-        )
-        .then(res => {
+        })
+        .then((res) => {
           if (res.data) {
-            localStorage.setItem("token", res.data.access_token);
-            localStorage.setItem("expires_in", res.data.expires_in);
-            localStorage.setItem("setDate", new Date());
-            commit("signInStatus", true);
+            commit("user", res.data);
           }
         })
-        .catch(async err => {
-          data.catch();
-          if (err.response) {
-            if (err.response.status === 403) {
-              await localStorage.setItem(
-                "token",
-                err.response.data.access_token
-              );
-              dispatch("resend", {
-                token: err.response.data.access_token,
-                finally: () => {}
-              });
-              data.resend();
-            }
-            return alert(err.response.data.message);
-          }
-          return alert(err);
-        })
-        .finally(data.finally());
-    },
-
-    resend({}, data) {
-      axios
-        .get("http://localhost:8000/api/email/resend", {
-          headers: {
-            Accept: "application/json",
-            Authorization: "Bearer " + data.token
-          }
-        })
-        .then(res => {
-          alert(res.data.message);
-          data.finally();
-        })
-        .catch(err => {
-          if (err.response)
-            if (err.response.status === 401) {
-              return alert(
-                "email verification expired,\nplease login to request another email"
-              );
-            }
-          data.finally();
-          return alert(err);
-        });
-    },
-
-    challenges({ commit, state }) {
-      if (state.signedIn)
-        axios
-          .post("http://kntuctf.ir/api/get_p.php", {
-            state: pstate,
-            token: localStorage.getItem("token")
-          })
-          .then(res => {
-            if (res.data) {
-              commit("challenges", res.data);
-            }
-          })
-          .catch(err => {
-            if (err.response) return alert(err.response.data.error);
-            return alert(err);
-          });
-    },
-    leaderboard({ commit }, { open, cb }) {
-      commit("leaderboard", []);
-      axios
-        .post("http://kntuctf.ir/api/leaderboard.php", {
-          open: open,
-          state: pstate
-        })
-        .then(async res => {
-          if (res.data) {
-            await commit("leaderboard", res.data);
-            cb();
-          }
-        })
-        .catch(err => {
+        .catch((err) => {
           if (err.response) return alert(err.response.data.error);
           return alert(err);
         });
-    }
-  }
+    },
+  },
 });
