@@ -7,18 +7,24 @@ export default {
     localStorage.removeItem("setDate");
   },
 
-  signOut({ commit, dispatch }) {
+  signout({ commit, dispatch }, data) {
     axios
-      .get("http://localhost:8000/api/logout", {
-        headers: {
-          Accept: "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
+      .post(
+        "http://localhost:8000/api/logout",
+        {},
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((s) => {})
       .catch((err) => console.log(err.response))
       .finally(() => {
         dispatch("clearStorage");
         commit("signInStatus", false);
+        data.route();
       });
   },
 
@@ -87,6 +93,7 @@ export default {
           localStorage.setItem("token", res.data.access_token);
           localStorage.setItem("expires_in", res.data.expires_in);
           localStorage.setItem("setDate", new Date());
+          data.then();
           commit("signInStatus", true);
         }
       })
