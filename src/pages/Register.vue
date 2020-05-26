@@ -33,12 +33,7 @@
             </div>
             <div class="block input">
               <g-image class="svg" src="~/assets/svgs/flag-solid.svg" alt />
-              <input
-                class="text-box"
-                type="text"
-                placeholder="CTFTime's teamID"
-                v-model="ctftime_id"
-              />
+              <input class="text-box" type="text" placeholder="CTFTime ID" v-model="ctftime_id" />
             </div>
             <div class="block input">
               <g-image class="svg" src="~/assets/svgs/key-solid.svg" alt />
@@ -47,6 +42,7 @@
             <div class="block input">
               <g-image class="svg" src="~/assets/svgs/unlock-solid.svg" alt />
               <input
+                id="last-input"
                 class="text-box"
                 type="password"
                 placeholder="Password Confirmation *"
@@ -61,7 +57,7 @@
                 <div></div>
                 <div></div>
               </div>
-              <button v-else class="button" @click="onSubmit">SIGN UP</button>
+              <button v-else class="button" id="button" @click="onSubmit">SIGN UP</button>
             </div>
           </div>
         </div>
@@ -104,6 +100,15 @@ export default {
     imagesloaded.setAttribute("src", "js/imagesloaded.pkgd.min.js");
     document.body.appendChild(imagesloaded);
     document.body.appendChild(demo);
+
+    document
+      .getElementById("last-input")
+      .addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+          document.getElementById("button").click();
+        }
+      });
   },
   methods: {
     onSubmit: function() {
@@ -290,7 +295,7 @@ export default {
   height: fit-content;
   align-items: center;
   justify-content: center;
-  margin: 10px;
+  margin: 15px;
 }
 
 .block > p {
@@ -309,52 +314,21 @@ export default {
 }
 
 .button {
-  position: relative;
-  background: none;
-  color: var(--second-color);
+  background: var(--second-color);
+  color: var(--background-dark);
   text-transform: uppercase;
-  text-decoration: none;
-  border: 0.2em solid var(--second-color);
-  padding: 0.5em 1em;
-  font-size: 0.8em;
+  border: none;
+  padding: 0.5em 0.8em;
+  border-radius: 5px;
+  font-size: 1em;
   cursor: pointer;
-}
-.button:hover {
-  border: 0.2em solid white;
-  color: white;
+  font-family: "Tomorrow", sans-serif;
+  transition: 0.5s;
+  margin: 10px;
 }
 
-.button::before {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 10%;
-  background: #222;
-  height: 0.3em;
-  right: 20%;
-  top: -0.21em;
-  transform: skewX(-45deg);
-  -webkit-transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
-  transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
-}
-.button::after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 10%;
-  background: #222;
-  height: 0.3em;
-  left: 20%;
-  bottom: -0.25em;
-  transform: skewX(45deg);
-  -webkit-transition: all 0.45 cubic-bezier(0.86, 0, 0.07, 1);
-  transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
-}
-.button:hover::before {
-  right: 80%;
-}
-.button:hover::after {
-  left: 80%;
+.button:hover {
+  background-color: white;
 }
 
 .acc {
