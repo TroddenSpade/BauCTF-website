@@ -2,13 +2,12 @@ import axios from "axios";
 import { SCOREBOARD, LEADERBOARD, SUBMISSIONS } from "./links";
 
 export default {
-  scoreboard({ commit }, { cb }) {
+  scoreboard({ commit }) {
     axios
       .get(SCOREBOARD)
       .then(async (res) => {
         if (res.data) {
-          await commit("scoreboard", res.data);
-          cb();
+          commit("scoreboard", res.data);
         }
       })
       .catch((err) => {
