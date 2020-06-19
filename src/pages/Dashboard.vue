@@ -25,8 +25,14 @@
         <div class="fake-left"></div>
         <div id="panel" class="left-panel" ref="panel">
           <ul>
-            <li class="items active-item" @click="clicked(0)">Main</li>
-            <li class="items" @click="clicked(1)">Events</li>
+            <li :class="{'items':true,'active-item':active === 0}" @click="clicked(0)">
+              <img class="tab-icon" src="../assets/icons/home.png" />
+              Home
+            </li>
+            <li :class="{'items':true,'active-item':active === 1}" @click="clicked(1)">
+              <img class="tab-icon" src="../assets/icons/event2.png" />
+              Events
+            </li>
           </ul>
         </div>
         <div class="rest">
@@ -51,12 +57,12 @@ export default {
   },
   data() {
     return {
-      active: 0
+      active: 1
     };
   },
-  created() {
+  async created() {
     if (!this.signedIn) {
-      this.$router.push({
+      await this.$router.push({
         path: "/login"
       });
     } else {
@@ -133,7 +139,7 @@ export default {
 }
 
 .icon-container:hover .icon {
-  transform: scale(1.2);
+  transform: scale(1.1);
   transition: transform 0.5s;
 }
 
@@ -250,7 +256,12 @@ export default {
 .left {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
-  transition: 0.5s;
+  transition: 0.2s;
+}
+
+.tab-icon {
+  height: 2vh;
+  margin-right: 8px;
 }
 
 @media screen and (max-width: 600px) {
