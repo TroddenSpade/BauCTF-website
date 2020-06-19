@@ -55,7 +55,7 @@
         <div class="event" v-if="latestEvent != null">
           <div class="event-top">
             <h1>Latest Event</h1>
-            <a class="button" href="/register">REGISTER NOW</a>
+            <a class="button" href="/login">REGISTER NOW</a>
           </div>
           <div class="event-info">
             <h2>{{latestEvent.name}}</h2>
@@ -382,6 +382,7 @@ export default {
   position: relative;
   margin: 5vh;
   animation: convert linear 0.5s;
+  padding: 1px;
 }
 
 @keyframes noise-anim {
@@ -653,12 +654,11 @@ export default {
 }
 
 .glitch-info {
-  /* background-color: var(--background-dark); */
   font-family: "Tomorrow", sans-serif;
-  /* color: white; */
   font-size: 4em;
   position: relative;
   margin: 0 auto;
+  padding: 1px;
 }
 
 .glitch-dark {
@@ -667,6 +667,7 @@ export default {
   font-size: 4em;
   position: relative;
   margin: 0 auto;
+  padding: 1px;
   animation: convert linear 0.5s;
 }
 
