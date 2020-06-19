@@ -11,29 +11,85 @@
       :loadRecaptchaScript="true"
     />
     <div class="container" v-if="!signedIn">
-      <div class="glitch">
-        <div class="glitch__img"></div>
-        <div class="glitch__img"></div>
-        <div class="glitch__img"></div>
-        <div class="glitch__img"></div>
-        <div class="glitch__img"></div>
-      </div>
       <div class="inputs">
-        <h1 class="content__title">SIGN IN</h1>
-        <div class="inside-inputs">
-          <div class="block input">
+        <div class="top-bar">
+          <g-image id="logo" v-if="this.state != 1" src="~/assets/image/logo.png" />
+          <div class="part">
+            <ul>
+              <li :class="{ 'active-tag': state !== 1 }">
+                <a @click="changeState(0)">SIGN IN</a>
+              </li>
+              <li :class="{ 'active-tag': state !== 0 }">
+                <a @click="changeState(1)">REGISTER</a>
+              </li>
+              <hr
+                :class="{
+                  'active-line': state === 1,
+                  'none-line': state === 2
+                }"
+              />
+            </ul>
+          </div>
+        </div>
+
+        <div v-if="this.state !== 1" class="inside-inputs">
+          <div class="text-body">
             <g-image class="svg" src="~/assets/svgs/envelope-solid.svg" alt />
-            <input class="text-box" type="text" placeholder="Email" v-model="email" />
+            <input class="last-input" type="text" placeholder="Email" v-model="email" />
           </div>
 
-          <div class="block input">
+          <div v-show="this.state === 0" class="text-body">
             <g-image class="svg" src="~/assets/svgs/key-solid.svg" alt />
+            <input class="last-input" type="password" placeholder="Password" v-model="password" />
+          </div>
+
+          <div class="submit-cont">
+            <div v-if="this.loading" class="lds-ring" key="spinner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <button
+              v-else
+              class="button"
+              id="button"
+              @click="onSubmit"
+            >{{ this.state === 2 ? "RESET" : "LOGIN" }}</button>
+          </div>
+
+          <div v-show="this.state === 0" class="block">
+            <p>
+              Forgot Password?
+              <a class="acc" @click="changeState(2)" tag="a" href>Reset Password</a>
+            </p>
+          </div>
+        </div>
+
+        <div v-if="this.state === 1" class="inside-inputs">
+          <div class="text-body">
+            <g-image class="svg" src="~/assets/svgs/users-solid.svg" alt />
+            <input type="text" placeholder="Your Team's Name *" v-model="name" />
+          </div>
+          <div class="text-body">
+            <g-image class="svg" src="~/assets/svgs/envelope-solid.svg" alt />
+            <input type="text" placeholder="Email *" v-model="email" />
+          </div>
+          <div class="text-body">
+            <g-image class="svg" src="~/assets/svgs/flag-solid.svg" alt />
+            <input type="text" placeholder="CTFTime ID" v-model="ctftime_id" />
+          </div>
+          <div class="text-body">
+            <g-image class="svg" src="~/assets/svgs/key-solid.svg" alt />
+            <input type="password" placeholder="Password *" v-model="password" />
+          </div>
+          <div class="text-body">
+            <g-image class="svg" src="~/assets/svgs/unlock-solid.svg" alt />
             <input
-              class="text-box"
-              id="last-input"
+              class="last-input"
               type="password"
-              placeholder="Password"
-              v-model="password"
+              placeholder="Password Confirmation *"
+              v-model="password_confirmation"
             />
           </div>
 
@@ -44,27 +100,12 @@
               <div></div>
               <div></div>
             </div>
-            <button v-else class="button" id="button" @click="onSubmit">LOGIN</button>
-          </div>
-
-          <div class="block content__text">
-            <p>
-              Don't have an account?
-              <g-link class="acc" to="/register" tag="a" href>Register</g-link>
-            </p>
+            <button v-else class="button" id="button" @click="onSubmit">SIGN UP</button>
           </div>
         </div>
       </div>
     </div>
-    <div v-else class="container loggedin">
-      <div class="glitch">
-        <div class="glitch__img"></div>
-        <div class="glitch__img"></div>
-        <div class="glitch__img"></div>
-        <div class="glitch__img"></div>
-        <div class="glitch__img"></div>
-      </div>
-    </div>
+    <div v-else class="container loggedin"></div>
   </Layout>
 </template>
 
@@ -73,40 +114,55 @@ import { mapState } from "vuex";
 import axios from "axios";
 import VueRecaptcha from "vue-recaptcha";
 
+// 0 : login
+// 1 : register
+// 2 : forgot pass
+
 export default {
   data: function() {
     return {
+      state: 0,
+      name: "",
       password: "",
+      password_confirmation: "",
       email: "",
+      ctftime_id: "",
       captcha: null,
       loading: false
     };
   },
   computed: mapState(["signedIn"]),
   components: { VueRecaptcha },
-  mounted() {
-    if (this.signedIn)
-      this.$router.push({
-        path: "/dashboard"
-      });
 
-    let demo = document.createElement("script");
-    demo.setAttribute("src", "/js/demo.js");
-    let imagesloaded = document.createElement("script");
-    imagesloaded.setAttribute("src", "js/imagesloaded.pkgd.min.js");
-    document.body.appendChild(imagesloaded);
-    document.body.appendChild(demo);
+  async mounted() {
+    var lasts = document.getElementsByClassName("last-input");
 
-    document
-      .getElementById("last-input")
-      .addEventListener("keyup", function(event) {
+    lasts.forEach(e => {
+      e.addEventListener("keyup", function(event) {
         event.preventDefault();
         if (event.keyCode === 13) {
           document.getElementById("button").click();
         }
       });
+    });
   },
+
+  created() {
+    if (this.signedIn)
+      this.$router.push({
+        path: "/dashboard"
+      });
+  },
+
   methods: {
+    changeState: function(state) {
+      this.state = state;
+    },
+
+    onForgot: function() {
+      this.forgot = true;
+    },
+
     onSubmit: function() {
       this.loading = true;
 
@@ -119,37 +175,76 @@ export default {
           alert(err);
         });
     },
+
     onVerify: function(response) {
       this.captcha = response;
 
-      this.$store.dispatch("login", {
-        ...this.$data,
-        then: res => {
-          this.$router.push({
-            path: "/dashboard"
+      switch (this.state) {
+        case 0:
+          this.$store.dispatch("login", {
+            ...this.$data,
+            then: res => {
+              this.$router.push({
+                path: "/dashboard"
+              });
+            },
+            resend: () =>
+              this.$router.push({
+                path: "/email"
+              }),
+            finally: () => {
+              this.loading = false;
+              this.resetRecaptcha();
+            }
           });
-        },
-        resend: () =>
-          this.$router.push({
-            path: "/email"
-          }),
-        catch: () => this.resetRecaptcha(),
-        finally: () => (this.loading = false)
-      });
+          break;
+
+        case 1:
+          this.$store.dispatch("register", {
+            ...this.$data,
+            then: () =>
+              this.$router.push({
+                path: "/email"
+              }),
+            finally: () => {
+              this.loading = false;
+              this.resetRecaptcha();
+            }
+          });
+          break;
+
+        case 2:
+          return this.$store.dispatch("reset_email", {
+            ...this.$data,
+            finally: () => {
+              this.resetRecaptcha();
+              this.loading = false;
+              this.state = 0;
+            }
+          });
+          break;
+      }
     },
+
     onError: function(error) {
       alert("reCAPTCHA error");
     },
+
     onExpired: function() {
       this.captcha = null;
     },
+
     resetRecaptcha() {
       this.captcha = null;
       this.$refs.recaptcha.reset();
     },
+
     checker() {
       return new Promise((resolve, reject) => {
-        if (this.email.length == 0 || this.password.length == 0) {
+        if (
+          this.email.length == 0 ||
+          (this.password.length == 0 && this.state != 2)
+        ) {
           return reject(new Error("Fill out all the fields."));
         }
         if (
@@ -158,6 +253,9 @@ export default {
           ) === false
         ) {
           return reject(new Error("invalid email"));
+        }
+        if (this.state == 1 && this.password !== this.password_confirmation) {
+          return reject(new Error("Passwords didn't match"));
         }
         resolve();
       });
@@ -173,23 +271,102 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url(../assets/htp.jpeg) 100px 100px;
+  background-size: 200px 200px;
+  animation: animation 100s linear infinite forwards;
+}
+
+@keyframes animation {
+  100% {
+    background-position: +2000px +2000px;
+  }
+}
+
+#logo {
+  height: 150px;
+  width: 150px;
+}
+
+.top-bar {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.part {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  margin: 20px;
+  font-family: "Tomorrow";
+}
+
+.part > ul {
+  width: 100%;
+}
+
+ul li {
+  display: inline;
+  text-align: center;
+}
+
+.part a {
+  display: inline-block;
+  width: 50%;
+  padding: 0.75rem 0;
+  margin: 0;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.active-tag > a {
+  color: green;
+}
+
+.active-line {
+  margin-left: 50%;
+}
+
+.none-line {
+  width: 100%;
+}
+
+hr {
+  height: 1px;
+  width: 50%;
+  margin: 0;
+  background: var(--second-color);
+  border: none;
+  transition: 0.3s ease-in-out;
+}
+
+.text-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: solid 1px;
+  margin: 10px;
+  height: 30px;
+  width: 250px;
+}
+
+.text-body > input {
+  background-color: transparent;
+  border: solid 0px;
+  outline: none;
+  color: white;
+  height: 30px;
+  width: 100%;
 }
 
 .img {
   width: 80%;
   height: auto;
-}
-
-.register {
-  width: 80%;
-  height: 90%;
-  border-radius: 11px;
-  box-shadow: 0 14px 18px rgba(0, 0, 0, 1), 0 10px 10px rgba(0, 0, 0, 0.22);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-content: space-around;
-  border: solid 1px black;
 }
 
 .panel {
@@ -207,21 +384,22 @@ export default {
 .inputs {
   box-shadow: 0 14px 18px rgba(0, 0, 0, 1), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: absolute;
-  width: 40vw;
-  height: 70vh;
+  padding: 30px;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--background-dark);
+  background-color: #111111;
   border-radius: 10px;
   color: white;
-  font-family: "Teko";
+  font-family: monospace;
 }
 
 @media screen and (max-width: 900px) {
   .inputs {
     width: 350px;
+    box-sizing: border-box;
   }
 }
 
@@ -236,20 +414,6 @@ export default {
   line-height: 60px;
 }
 
-.text-box {
-  height: 25px;
-  width: 250px;
-  padding: 5px;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 5px;
-  border: none;
-
-  outline: 0;
-  font: 400 14px system-ui;
-}
-
 .submit-cont {
   display: flex;
   height: 60px;
@@ -258,42 +422,27 @@ export default {
   align-items: center;
 }
 
-.block {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-width: 1px;
-  border-color: white;
-  display: flex;
-  width: fit-content;
-  height: fit-content;
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
-}
-
-.block > p {
-  margin: 0;
-}
-
 .input {
   background: var(--second-color);
 }
 
 .svg {
-  margin: 5px;
-  height: 20px;
-  width: 25px;
+  margin-right: 10px;
+  margin-left: 5px;
+  height: 18px;
+  width: 18px;
   color: white;
+  filter: brightness(0) invert(1);
 }
 
 .button {
-  background: var(--second-color);
+  background: white;
   color: var(--background-dark);
   text-transform: uppercase;
   border: none;
-  padding: 0.5em 0.8em;
+  padding: 0.3em 0.8em;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 0.9em;
   cursor: pointer;
   font-family: "Tomorrow", sans-serif;
   transition: 0.5s;
@@ -301,7 +450,7 @@ export default {
 }
 
 .button:hover {
-  background-color: white;
+  background-color: var(--second-color);
 }
 
 .acc {
@@ -345,361 +494,6 @@ export default {
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-
-.imgloaded .content__title,
-.imgloaded .content__text {
-  animation-name: glitch-anim-text;
-  animation-duration: var(--time-anim);
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.content__title {
-  font-size: 2.5em;
-  position: relative;
-  color: var(--second-color);
-  animation-delay: calc(var(--delay-anim));
-}
-
-.content__text {
-  animation-delay: calc(var(--delay-anim));
-}
-
-/* Glitch styles */
-.glitch {
-  position: fixed;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  width: var(--glitch-width);
-  height: var(--glitch-height);
-  overflow: hidden;
-}
-
-.glitch__img {
-  position: absolute;
-  top: calc(-1 * var(--gap-vertical));
-  left: calc(-1 * var(--gap-horizontal));
-  width: calc(100% + var(--gap-horizontal) * 2);
-  height: calc(100% + var(--gap-vertical) * 2);
-  background: url(../assets/image/static-bg.png) no-repeat 50% 0;
-  background-color: var(--blend-color-1);
-  background-size: cover;
-  transform: translate3d(0, 0, 0);
-  background-blend-mode: var(--blend-mode-1);
-}
-
-.glitch__img:nth-child(n + 2) {
-  opacity: 0;
-}
-
-.imgloaded .glitch__img:nth-child(n + 2) {
-  animation-duration: var(--time-anim);
-  animation-delay: var(--delay-anim);
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.imgloaded .glitch__img:nth-child(2) {
-  background-color: var(--blend-color-2);
-  background-blend-mode: var(--blend-mode-2);
-  animation-name: glitch-anim-1;
-}
-
-.imgloaded .glitch__img:nth-child(3) {
-  background-color: var(--blend-color-3);
-  background-blend-mode: var(--blend-mode-3);
-  animation-name: glitch-anim-2;
-}
-
-.imgloaded .glitch__img:nth-child(4) {
-  background-color: var(--blend-color-4);
-  background-blend-mode: var(--blend-mode-4);
-  animation-name: glitch-anim-3;
-}
-
-.imgloaded .glitch__img:nth-child(5) {
-  background-color: var(--blend-color-5);
-  background-blend-mode: var(--blend-mode-5);
-  animation-name: glitch-anim-flash;
-}
-
-/* Animations */
-
-@keyframes glitch-anim-1 {
-  0% {
-    opacity: 1;
-    transform: translate3d(var(--gap-horizontal), 0, 0);
-    -webkit-clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
-    clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
-  }
-  2% {
-    -webkit-clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
-    clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
-  }
-  4% {
-    -webkit-clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
-    clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
-  }
-  6% {
-    -webkit-clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%);
-    clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%);
-  }
-  8% {
-    -webkit-clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
-    clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
-  }
-  10% {
-    -webkit-clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
-    clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
-  }
-  12% {
-    -webkit-clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
-    clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
-  }
-  14% {
-    -webkit-clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
-    clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
-  }
-  16% {
-    -webkit-clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
-    clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
-  }
-  18% {
-    -webkit-clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
-    clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
-  }
-  20% {
-    -webkit-clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
-    clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
-  }
-  21.9% {
-    opacity: 1;
-    transform: translate3d(var(--gap-horizontal), 0, 0);
-  }
-  22%,
-  100% {
-    opacity: 0;
-    transform: translate3d(0, 0, 0);
-    -webkit-clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-  }
-}
-
-@keyframes glitch-anim-2 {
-  0% {
-    opacity: 1;
-    transform: translate3d(calc(-1 * var(--gap-horizontal)), 0, 0);
-    -webkit-clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%);
-    clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%);
-  }
-  3% {
-    -webkit-clip-path: polygon(0 3%, 100% 3%, 100% 3%, 0 3%);
-    clip-path: polygon(0 3%, 100% 3%, 100% 3%, 0 3%);
-  }
-  5% {
-    -webkit-clip-path: polygon(0 5%, 100% 5%, 100% 20%, 0 20%);
-    clip-path: polygon(0 5%, 100% 5%, 100% 20%, 0 20%);
-  }
-  7% {
-    -webkit-clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
-    clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
-  }
-  9% {
-    -webkit-clip-path: polygon(0 40%, 100% 40%, 100% 40%, 0 40%);
-    clip-path: polygon(0 40%, 100% 40%, 100% 40%, 0 40%);
-  }
-  11% {
-    -webkit-clip-path: polygon(0 52%, 100% 52%, 100% 59%, 0 59%);
-    clip-path: polygon(0 52%, 100% 52%, 100% 59%, 0 59%);
-  }
-  13% {
-    -webkit-clip-path: polygon(0 60%, 100% 60%, 100% 60%, 0 60%);
-    clip-path: polygon(0 60%, 100% 60%, 100% 60%, 0 60%);
-  }
-  15% {
-    -webkit-clip-path: polygon(0 75%, 100% 75%, 100% 75%, 0 75%);
-    clip-path: polygon(0 75%, 100% 75%, 100% 75%, 0 75%);
-  }
-  17% {
-    -webkit-clip-path: polygon(0 65%, 100% 65%, 100% 40%, 0 40%);
-    clip-path: polygon(0 65%, 100% 65%, 100% 40%, 0 40%);
-  }
-  19% {
-    -webkit-clip-path: polygon(0 45%, 100% 45%, 100% 50%, 0 50%);
-    clip-path: polygon(0 45%, 100% 45%, 100% 50%, 0 50%);
-  }
-  20% {
-    -webkit-clip-path: polygon(0 14%, 100% 14%, 100% 33%, 0 33%);
-    clip-path: polygon(0 14%, 100% 14%, 100% 33%, 0 33%);
-  }
-  21.9% {
-    opacity: 1;
-    transform: translate3d(calc(-1 * var(--gap-horizontal)), 0, 0);
-  }
-  22%,
-  100% {
-    opacity: 0;
-    transform: translate3d(0, 0, 0);
-    -webkit-clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-  }
-}
-
-@keyframes glitch-anim-3 {
-  0% {
-    opacity: 1;
-    transform: translate3d(0, calc(-1 * var(--gap-vertical)), 0)
-      scale3d(-1, -1, 1);
-    -webkit-clip-path: polygon(0 1%, 100% 1%, 100% 3%, 0 3%);
-    clip-path: polygon(0 1%, 100% 1%, 100% 3%, 0 3%);
-  }
-  1.5% {
-    -webkit-clip-path: polygon(0 10%, 100% 10%, 100% 9%, 0 9%);
-    clip-path: polygon(0 10%, 100% 10%, 100% 9%, 0 9%);
-  }
-  2% {
-    -webkit-clip-path: polygon(0 5%, 100% 5%, 100% 6%, 0 6%);
-    clip-path: polygon(0 5%, 100% 5%, 100% 6%, 0 6%);
-  }
-  2.5% {
-    -webkit-clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
-    clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
-  }
-  3% {
-    -webkit-clip-path: polygon(0 10%, 100% 10%, 100% 10%, 0 10%);
-    clip-path: polygon(0 10%, 100% 10%, 100% 10%, 0 10%);
-  }
-  5% {
-    -webkit-clip-path: polygon(0 30%, 100% 30%, 100% 25%, 0 25%);
-    clip-path: polygon(0 30%, 100% 30%, 100% 25%, 0 25%);
-  }
-  5.5% {
-    -webkit-clip-path: polygon(0 15%, 100% 15%, 100% 16%, 0 16%);
-    clip-path: polygon(0 15%, 100% 15%, 100% 16%, 0 16%);
-  }
-  7% {
-    -webkit-clip-path: polygon(0 40%, 100% 40%, 100% 39%, 0 39%);
-    clip-path: polygon(0 40%, 100% 40%, 100% 39%, 0 39%);
-  }
-  8% {
-    -webkit-clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
-    clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
-  }
-  9% {
-    -webkit-clip-path: polygon(0 60%, 100% 60%, 100% 55%, 0 55%);
-    clip-path: polygon(0 60%, 100% 60%, 100% 55%, 0 55%);
-  }
-  10.5% {
-    -webkit-clip-path: polygon(0 30%, 100% 30%, 100% 31%, 0 31%);
-    clip-path: polygon(0 30%, 100% 30%, 100% 31%, 0 31%);
-  }
-  11% {
-    -webkit-clip-path: polygon(0 70%, 100% 70%, 100% 69%, 0 69%);
-    clip-path: polygon(0 70%, 100% 70%, 100% 69%, 0 69%);
-  }
-  13% {
-    -webkit-clip-path: polygon(0 40%, 100% 40%, 100% 41%, 0 41%);
-    clip-path: polygon(0 40%, 100% 40%, 100% 41%, 0 41%);
-  }
-  14% {
-    -webkit-clip-path: polygon(0 80%, 100% 80%, 100% 75%, 0 75%);
-    clip-path: polygon(0 80%, 100% 80%, 100% 75%, 0 75%);
-  }
-  14.5% {
-    -webkit-clip-path: polygon(0 50%, 100% 50%, 100% 51%, 0 51%);
-    clip-path: polygon(0 50%, 100% 50%, 100% 51%, 0 51%);
-  }
-  15% {
-    -webkit-clip-path: polygon(0 90%, 100% 90%, 100% 90%, 0 90%);
-    clip-path: polygon(0 90%, 100% 90%, 100% 90%, 0 90%);
-  }
-  16% {
-    -webkit-clip-path: polygon(0 60%, 100% 60%, 100% 60%, 0 60%);
-    clip-path: polygon(0 60%, 100% 60%, 100% 60%, 0 60%);
-  }
-  18% {
-    -webkit-clip-path: polygon(0 100%, 100% 100%, 100% 99%, 0 99%);
-    clip-path: polygon(0 100%, 100% 100%, 100% 99%, 0 99%);
-  }
-  20% {
-    -webkit-clip-path: polygon(0 70%, 100% 70%, 100% 71%, 0 71%);
-    clip-path: polygon(0 70%, 100% 70%, 100% 71%, 0 71%);
-  }
-  21.9% {
-    opacity: 1;
-    transform: translate3d(0, calc(-1 * var(--gap-vertical)), 0)
-      scale3d(-1, -1, 1);
-  }
-  22%,
-  100% {
-    opacity: 0;
-    transform: translate3d(0, 0, 0);
-    -webkit-clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-  }
-}
-
-@keyframes glitch-anim-text {
-  0% {
-    transform: translate3d(calc(-1 * var(--gap-horizontal)), 0, 0)
-      scale3d(-1, -1, 1);
-    -webkit-clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
-    clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
-  }
-  2% {
-    -webkit-clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
-    clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
-  }
-  4% {
-    -webkit-clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
-    clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
-  }
-  5% {
-    -webkit-clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
-    clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
-  }
-  6% {
-    -webkit-clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
-    clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
-  }
-  7% {
-    -webkit-clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
-    clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
-  }
-  8% {
-    -webkit-clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
-    clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
-  }
-  9% {
-    -webkit-clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
-    clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
-  }
-  9.9% {
-    transform: translate3d(calc(-1 * var(--gap-horizontal)), 0, 0)
-      scale3d(-1, -1, 1);
-  }
-  10%,
-  100% {
-    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-  }
-}
-
-/* Flash */
-@keyframes glitch-anim-flash {
-  0%,
-  5% {
-    opacity: 0.2;
-    transform: translate3d(var(--gap-horizontal), var(--gap-vertical), 0);
-  }
-  5.5%,
-  100% {
-    opacity: 0;
-    transform: translate3d(0, 0, 0);
   }
 }
 </style>
