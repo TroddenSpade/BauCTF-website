@@ -61,6 +61,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { LHOST } from "../store/links";
 
 export default {
   name: "index",
@@ -68,29 +69,23 @@ export default {
   data: function() {
     return {};
   },
-  methods: {
-    handleScroll() {
-      // let container = document.getElementById("container");
-      // if (
-      //   (9.5 / 10) * window.innerHeight + window.scrollY >=
-      //   container.offsetHeight
-      // ) {
-      //   document.getElementById("img").className = "none";
-      // } else {
-      //   document.getElementById("img").className = "down";
-      // }
-    }
-  },
-  mounted: function() {
+  methods: {},
+  mounted: async function() {
     this.$store.dispatch("latestEvent");
-    this.$store.dispatch("scoreboard", {
-      cb: () => {
-        this.handleScroll();
+    this.$store.dispatch("scoreboard");
+    // this.$echo.channel("test").listen("RefreshScoreboard", event => {
+    //   this.$store.commit("scoreboard", event.scoreboard);
+    // });
+
+    var scripts = document.getElementsByTagName("script");
+    for (var i = scripts.length; i--; ) {
+      if (scripts[i] != undefined && scripts[i].src == LHOST + "/js/particles.min.js") {
+        await scripts[i].parentNode.removeChild(scripts[i]);
       }
-    });
-    this.$echo.channel("test").listen("RefreshScoreboard", event => {
-      this.$store.commit("scoreboard", event.scoreboard);
-    });
+      if (scripts[i] != undefined && scripts[i].src == LHOST + "/js/options.js") {
+        await scripts[i].parentNode.removeChild(scripts[i]);
+      }
+    }
 
     let particles = document.createElement("script");
     particles.setAttribute("src", "/js/particles.min.js");
@@ -99,10 +94,6 @@ export default {
     options.setAttribute("src", "/js/options.js");
     document.body.appendChild(options);
   }
-
-  // destroyed: function() {
-  //   window.removeEventListener("scroll", this.handleScroll);
-  // }
 };
 </script>
 
@@ -193,6 +184,7 @@ export default {
 
 .header {
   color: lightgrey;
+  /* border-bottom: solid 1px grey; */
 }
 
 .score,
