@@ -5,12 +5,12 @@ export default {
   latestEvent({ commit, state }) {
     axios
       .get(LATEST_EVENT)
-      .then((res) => {
+      .then(res => {
         if (res.data) {
           commit("latestEvent", res.data);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         if (err.response) return alert(err.response.data.error);
         return alert(err);
       });
@@ -20,15 +20,15 @@ export default {
       .get(EVENTS, {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
       })
-      .then((res) => {
+      .then(res => {
         if (res.data) {
           commit("events", res.data);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         if (err.response) return alert(err.response.data.error);
         return alert(err);
       });
@@ -39,24 +39,24 @@ export default {
         PARTICIPATE,
         {
           e_id: data.id,
-          code: data.code,
+          code: data.code | null
         },
         {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
+            Authorization: "Bearer " + localStorage.getItem("token")
+          }
         }
       )
-      .then((res) => {
+      .then(res => {
         if (res.data) {
           alert(res.data.message);
-          dispatch("submissions");
         }
+        dispatch("events");
       })
-      .catch((err) => {
+      .catch(err => {
         if (err.response) return alert(err.response.data.message);
         return alert(err);
       });
-  },
+  }
 };
