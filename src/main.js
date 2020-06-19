@@ -4,8 +4,8 @@
 import "~/assets/index.css";
 
 import Vuex from "vuex";
-import Echo from "laravel-echo";
-import io from "socket.io-client";
+// import Echo from "laravel-echo";
+// import io from "socket.io-client";
 
 import HeadertLayout from "~/layouts/Header.vue";
 import { store } from "~/store";
@@ -14,7 +14,7 @@ export default function(Vue, { router, head, isClient, appOptions }) {
   // Set default layout as a global component
   head.meta.push({
     name: "viewport",
-    content: "width=device-width, initial-scale=1"
+    content: "width=device-width, initial-scale=1",
   });
 
   Vue.component("Layout", HeadertLayout);
@@ -22,9 +22,9 @@ export default function(Vue, { router, head, isClient, appOptions }) {
   appOptions.store = store;
   appOptions.store.dispatch("autoLogin");
 
-  Vue.prototype.$echo = new Echo({
-    broadcaster: "socket.io",
-    host: "localhost:6001",
-    client: io
-  });
+  // Vue.prototype.$echo = new Echo({
+  //   broadcaster: "socket.io",
+  //   host: "localhost:6001",
+  //   client: io
+  // });
 }
