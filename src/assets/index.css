@@ -6,21 +6,20 @@
 body {
   margin: 0;
 }
+
 html {
   overflow: scroll;
   overflow-x: hidden;
+  scrollbar-width: none;
 }
+
 a {
-  color: black;
   text-decoration: none;
 }
+
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
-}
-
-h2 {
-  margin: 0;
 }
 
 button:focus {
