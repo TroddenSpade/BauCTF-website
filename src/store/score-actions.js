@@ -1,18 +1,20 @@
 import axios from "axios";
 import { SCOREBOARD, LEADERBOARD, SUBMISSIONS } from "./links";
+import { myLocalLocalsotarge } from "./index";
 
 export default {
-  scoreboard({ commit }) {
+  scoreboard({ commit }, { id, notification, next }) {
     axios
-      .get(SCOREBOARD)
-      .then(async (res) => {
+      .get(SCOREBOARD + id)
+      .then(async res => {
         if (res.data) {
           commit("scoreboard", res.data);
+          next(res.data.id);
         }
       })
-      .catch((err) => {
-        if (err.response) return alert(err.response.data.error);
-        return alert(err);
+      .catch(err => {
+        if (err.response) return notification(err.response.data.message);
+        return notification(err);
       });
   },
   leaderboard({ commit }) {
@@ -20,15 +22,15 @@ export default {
       .get(LEADERBOARD, {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+          Authorization: "Bearer " + myLocalLocalsotarge(0, "token")
+        }
       })
-      .then((res) => {
+      .then(res => {
         if (res.data) {
           commit("leaderboard", res.data);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         if (err.response) return alert(err.response.data.error);
         return alert(err);
       });
@@ -38,17 +40,17 @@ export default {
       .get(SUBMISSIONS, {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+          Authorization: "Bearer " + myLocalLocalsotarge(0, "token")
+        }
       })
-      .then((res) => {
+      .then(res => {
         if (res.data) {
           commit("submissions", res.data);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         if (err.response) return alert(err.response.data.error);
         return alert(err);
       });
-  },
+  }
 };
