@@ -4,6 +4,7 @@
 import "~/assets/index.css";
 
 import Vuex from "vuex";
+import Notifications from "vue-notification/dist/ssr";
 // import Echo from "laravel-echo";
 // import io from "socket.io-client";
 
@@ -14,10 +15,11 @@ export default function(Vue, { router, head, isClient, appOptions }) {
   // Set default layout as a global component
   head.meta.push({
     name: "viewport",
-    content: "width=device-width, initial-scale=1",
+    content: "width=device-width, initial-scale=1"
   });
 
   Vue.component("Layout", HeadertLayout);
+  Vue.use(Notifications);
   Vue.use(Vuex);
   appOptions.store = store;
   appOptions.store.dispatch("autoLogin");
