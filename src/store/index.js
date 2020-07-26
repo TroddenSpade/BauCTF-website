@@ -12,18 +12,35 @@ import challenge_actions from "./challenge-actions";
 
 import { USER } from "./links";
 
+export function myLocalLocalsotarge(state, key, value) {
+  // 0 for get
+  // 1 for set
+  // 2 for remove
+
+  if (process.isClient) {
+    switch (state) {
+      case 0:
+        return localStorage.getItem(key);
+      case 1:
+        return localStorage.setItem(key, value);
+      case 2:
+        return localStorage.removeItem(key);
+    }
+  }
+  return null;
+}
+
 export const store = new Vuex.Store({
   state: {
     signedIn: false,
     dark: false,
     latestEvent: null,
     user: {},
-    scoreboard_data: [],
+    scoreboards: {},
     challenges: [],
-    events: [],
     leaderboard: [],
     submissions: [],
-    categories: ["WEB", "REV", "CRYP", "PWN", "MISC"],
+    categories: ["WEB", "REV", "CRYP", "PWN", "MISC"]
   },
   getters: {
     signedIn(state) {
@@ -52,7 +69,7 @@ export const store = new Vuex.Store({
     },
     submissions(state) {
       return state.submissions;
-    },
+    }
   },
   mutations: {
     darkMode(state, status) {
@@ -62,9 +79,9 @@ export const store = new Vuex.Store({
       state.signedIn = status;
     },
     latestEvent(state, status) {
-      state.latestEvent = status.event;
+      state.latestEvent = status;
     },
-    scoreboard(state, scoreboard_data) {
+    scoreboard(state, event) {
       function compare(a, b) {
         if (a.score > b.score) return -1;
         if (b.score > a.score) return 1;
@@ -72,17 +89,18 @@ export const store = new Vuex.Store({
         if (a.time < b.time) return -1;
         return 0;
       }
-      scoreboard_data.participants = Object.values(
-        scoreboard_data.participants
+      event.scoreboard.participants = Object.values(
+        event.scoreboard.participants
       ).sort(compare);
-      state.scoreboard_data = scoreboard_data;
+      Vue.set(state.scoreboards, event.id, event);
+      console.log("score", state.scoreboards);
     },
 
     challenges(state, challenges) {
       state.challenges = challenges;
     },
     events(state, events) {
-      events.forEach((e) => {
+      events.forEach(e => {
         var end = moment.utc(e.end, "ddd, D-MMM-YYYY HH:mm");
         let now = moment().toDate();
         e.disabled = now > end ? 1 : 0;
@@ -96,11 +114,11 @@ export const store = new Vuex.Store({
       state.user = user;
     },
     submissions(state, submissions) {
-      submissions.forEach((e) => {
+      submissions.forEach(e => {
         e.created_at = moment.unix(e.created_at).fromNow();
       });
       state.submissions = submissions;
-    },
+    }
   },
   actions: {
     ...login_actions,
@@ -112,18 +130,18 @@ export const store = new Vuex.Store({
         .get(USER, {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
+            Authorization: "Bearer " + myLocalLocalsotarge(0, "token")
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res.data) {
             commit("user", res.data);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           if (err.response) return alert(err.response.data.error);
           return alert(err);
         });
-    },
-  },
+    }
+  }
 });
