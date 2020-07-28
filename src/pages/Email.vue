@@ -9,16 +9,18 @@
     </div>
     <div class="container" v-else-if="token">
       <div class="register">
-        <div class="">
+        <div class>
           <h2>Verify Your Email Address</h2>
         </div>
         <div>
-          <p>
-            Before proceeding, please check your email for a verification link.
-          </p>
+          <p>Before proceeding, please check your email for a verification link.</p>
           <p>
             If you did not receive the email,
-            <a class="resend" @click="resend" v-if="!loading">click here</a>
+            <a
+              class="resend"
+              @click="resend"
+              v-if="!loading"
+            >click here</a>
             <a class="sending" v-else>click here</a> to request another.
           </p>
         </div>
@@ -31,11 +33,12 @@
 <script>
 import { mapState } from "vuex";
 import axios from "axios";
+import { myLocalLocalsotarge } from "~/store/index";
 
 export default {
   data: function() {
     return {
-      token: localStorage.getItem("token"),
+      token: myLocalLocalsotarge(0, "token"),
       loading: false
     };
   },
@@ -71,8 +74,9 @@ export default {
   padding: 10px 0px;
   font-family: "Tomorrow";
   color: white;
-  background: url(../assets/htp.jpeg) 100px 100px;
+  background: url(/img/htp.png) 100px 100px;
   background-size: 200px 200px;
+  background-color: #000;
   animation: animation 100s linear infinite forwards;
 }
 
