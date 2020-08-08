@@ -40,7 +40,9 @@ export const store = new Vuex.Store({
     challenges: [],
     leaderboard: [],
     submissions: [],
-    categories: ["WEB", "REV", "CRYP", "PWN", "MISC"]
+    events: [],
+    category_names: ["WEB", "REV", "CRYP", "PWN", "MISC"],
+    categories: {}
   },
   getters: {
     signedIn(state) {
@@ -57,6 +59,9 @@ export const store = new Vuex.Store({
     },
     events(state) {
       return state.events;
+    },
+    category_names(state) {
+      return state.category_names;
     },
     categories(state) {
       return state.categories;
@@ -93,11 +98,12 @@ export const store = new Vuex.Store({
         event.scoreboard.participants
       ).sort(compare);
       Vue.set(state.scoreboards, event.id, event);
-      console.log("score", state.scoreboards);
     },
-
     challenges(state, challenges) {
       state.challenges = challenges;
+    },
+    categories(state, challenges) {
+      Vue.set(state.categories, challenges.cat, challenges.data);
     },
     events(state, events) {
       events.forEach(e => {
