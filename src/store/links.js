@@ -1,0 +1,10 @@
+export const LHOST = "http://bauctf.ir";
+export const SCOREBOARD = "http://bauctf.ir/api/scoreboard";
+export const LATEST_EVENT = "http://bauctf.ir/api/event/latest";
+export const EVENTS = "http://localhost:8000/api/events";
+export const PARTICIPATE = "http://localhost:8000/api/participants";
+export const CHALLENGES = "http://localhost:8000/api/challenges";
+export const SUBMIT = "http://localhost:8000/api/submit";
+export const LEADERBOARD = "http://localhost:8000/api/leaderboard";
+export const USER = "http://localhost:8000/api/user";
+export const SUBMISSIONS = "http://localhost:8000/api/submissions";
