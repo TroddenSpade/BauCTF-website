@@ -127,31 +127,20 @@ export default {
       if (offset <= 0) {
         return this.notification("error", "Scoreboard not Found.");
       }
-      if (this.scoreboards[offset] === undefined)
-        this.$store.dispatch("scoreboard", {
-          id: offset,
-          notification: msg => this.notification("error", msg),
-          next: () => {
-            this.$router.push({
-              path: "/scoreboard/" + offset
-            });
-          }
-        });
-      else
-        this.$router.push({
-          path: "/scoreboard/" + offset
-        });
+      this.$router.push({
+        path: "/scoreboard/" + offset
+      });
     }
   },
   mounted: async function() {
-    if (this.scoreboards[this.id] === undefined)
-      this.$store.dispatch("scoreboard", {
-        id: parseInt(this.id),
-        notification: msg => this.notification("error", msg),
-        next: id => {
-          this.id = id;
-        }
-      });
+    // if (this.scoreboards[this.id] === undefined)
+    //   this.$store.dispatch("scoreboard", {
+    //     id: parseInt(this.id),
+    //     notification: msg => this.notification("error", msg),
+    //     next: id => {
+    //       this.id = id;
+    //     }
+    //   });
     // this.$echo.channel("test").listen("RefreshScoreboard", event => {
     //   this.$store.commit("scoreboard", event.scoreboard);
     // });
