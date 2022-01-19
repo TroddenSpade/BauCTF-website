@@ -1,6 +1,6 @@
 <template>
   <Layout :stickable="true">
-    <vue-recaptcha
+    <!-- <vue-recaptcha
       sitekey="6LcFX-EUAAAAAHXcib6qmnXt2QJTqR5S35UFoaUw"
       theme="dark"
       size="invisible"
@@ -9,7 +9,7 @@
       @expired="onExpired"
       @error="onError"
       :loadRecaptchaScript="true"
-    />
+    /> -->
     <div class="container" v-if="!signedIn">
       <div class="inputs">
         <div class="top-bar">
@@ -103,6 +103,12 @@
             <button v-else class="button" id="button" @click="onSubmit">SIGN UP</button>
           </div>
         </div>
+
+        <div data-v-c60ed9d4="" data-v-a18886de="" class="captcha">
+          This site is protected by reCAPTCHA and the Google
+          <a data-v-c60ed9d4="" data-v-a18886de="" href="https://policies.google.com/privacy">Privacy Policy</a> and
+          <a data-v-c60ed9d4="" data-v-a18886de="" href="https://policies.google.com/terms">Terms of Service</a> apply.
+        </div>
       </div>
     </div>
     <div v-else class="container loggedin"></div>
@@ -135,16 +141,16 @@ export default {
   components: { VueRecaptcha },
 
   async mounted() {
-    var lasts = document.getElementsByClassName("last-input");
+    // var lasts = document.getElementsByClassName("last-input");
 
-    lasts.forEach(e => {
-      e.addEventListener("keyup", function(event) {
-        event.preventDefault();
-        if (event.keyCode === 13) {
-          document.getElementById("button").click();
-        }
-      });
-    });
+    // lasts.forEach(e => {
+    //   e.addEventListener("keyup", function(event) {
+    //     event.preventDefault();
+    //     if (event.keyCode === 13) {
+    //       document.getElementById("button").click();
+    //     }
+    //   });
+    // });
   },
 
   created() {
@@ -181,47 +187,47 @@ export default {
 
       switch (this.state) {
         case 0:
-          this.$store.dispatch("login", {
-            ...this.$data,
-            then: res => {
-              this.$router.push({
-                path: "/dashboard"
-              });
-            },
-            resend: () =>
-              this.$router.push({
-                path: "/email"
-              }),
-            finally: () => {
-              this.loading = false;
-              this.resetRecaptcha();
-            }
-          });
+          // this.$store.dispatch("login", {
+          //   ...this.$data,
+          //   then: res => {
+          //     this.$router.push({
+          //       path: "/dashboard"
+          //     });
+          //   },
+          //   resend: () =>
+          //     this.$router.push({
+          //       path: "/email"
+          //     }),
+          //   finally: () => {
+          //     this.loading = false;
+          //     this.resetRecaptcha();
+          //   }
+          // });
           break;
 
         case 1:
-          this.$store.dispatch("register", {
-            ...this.$data,
-            then: () =>
-              this.$router.push({
-                path: "/email"
-              }),
-            finally: () => {
-              this.loading = false;
-              this.resetRecaptcha();
-            }
-          });
+          // this.$store.dispatch("register", {
+          //   ...this.$data,
+          //   then: () =>
+          //     this.$router.push({
+          //       path: "/email"
+          //     }),
+          //   finally: () => {
+          //     this.loading = false;
+          //     this.resetRecaptcha();
+          //   }
+          // });
           break;
 
         case 2:
-          return this.$store.dispatch("reset_email", {
-            ...this.$data,
-            finally: () => {
-              this.resetRecaptcha();
-              this.loading = false;
-              this.state = 0;
-            }
-          });
+          // return this.$store.dispatch("reset_email", {
+          //   ...this.$data,
+          //   finally: () => {
+          //     this.resetRecaptcha();
+          //     this.loading = false;
+          //     this.state = 0;
+          //   }
+          // });
           break;
       }
     },
@@ -271,7 +277,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(../assets/htp.jpeg) 100px 100px;
+  background: url(/img/htp.png) 100px 100px;
+  background-color: #000;
   background-size: 200px 200px;
   animation: animation 100s linear infinite forwards;
 }
@@ -293,6 +300,17 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.captcha{
+  margin-top: 20px;
+  width: 270px;
+  font-size: 9px;
+  color: grey;
+}
+
+.captcha>a{
+    color: #d3d3d3;
 }
 
 .part {
@@ -394,6 +412,7 @@ hr {
   border-radius: 10px;
   color: white;
   font-family: monospace;
+  min-height: 520px;
 }
 
 @media screen and (max-width: 900px) {
