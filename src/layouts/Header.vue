@@ -22,7 +22,7 @@
         <li>
           <g-link
             class="link"
-            to="/scoreboard"
+            to="/scoreboard/4"
             tag="a"
             :active-class="stickable || dark ? 'active_dark' : 'active'"
           >SCOREBOARD</g-link>
