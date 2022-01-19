@@ -5,7 +5,7 @@ import { myLocalLocalsotarge } from "./index";
 export default {
   scoreboard({ commit }, { id, notification, next }) {
     axios
-      .get(SCOREBOARD + id)
+      .get(SCOREBOARD + "/" + id)
       .then(async res => {
         if (res.data) {
           commit("scoreboard", res.data);
