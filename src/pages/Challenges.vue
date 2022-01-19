@@ -299,23 +299,7 @@ export default {
 }
 
 .login {
-  height: 91vh;
-  letter-spacing: 10px;
-  font-size: 40px;
-  color: black;
-  font-family: "Teko", sans-serif;
-  text-shadow: 2px 0 black, 0 1px black, 2px 0 black, 0 2px black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 70px;
-  background-image: radial-gradient(
-    ellipse farthest-corner at 2em 2em,
-    rgb(223, 223, 22),
-    rgb(223, 223, 22) 50%,
-    var(--second-color) 50%
-  );
-  background-size: 2em 2em;
+
 }
 
 input {
