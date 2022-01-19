@@ -10,6 +10,24 @@
     </div>
 
     <Layout :stickable="false">
+      <div class="event-container">
+        <div class="event" v-if="latestEvent != null">
+          <div class="event-top">
+            <h1>Latest Event</h1>
+            <a class="button" href="/login">REGISTER NOW</a>
+          </div>
+          <div class="event-info">
+            <h1>{{latestEvent.name}}</h1>
+            <h3>{{latestEvent.type}} - {{latestEvent.format}}</h3>
+            <h3>{{latestEvent.start}}</h3>
+            <h3>{{latestEvent.end}}</h3>
+          </div>
+        </div>
+        <div class="sponsor">
+          <h3 style="color:green;" >Want to become a sponsor ?</h3>
+          <a href="" class="contact-button">Contact Us</a>
+        </div>
+      </div>
       <div class="main-info" :class="{ 'main_dark': dark }">
         <div class="half1">
           <div
@@ -36,7 +54,7 @@
           >How does it Work ?</div>
         </div>
         <div class="half2">
-          <p>Our Version of CTF is more based on solving intuitive challenges rather than skill-based challenges, so KNTU CTF is a team competition in which you have to get the highest score from all the challenges, the score is decided by the number of challenges done and by the time each challenge has taken.</p>
+          <p>Our Version of CTF is more based on solving intuitive challenges rather than skill-based challenges, so BauCTF is a team competition in which you have to get the highest score from all the challenges, the score is decided by the number of challenges done and by the time each challenge has taken.</p>
         </div>
       </div>
       <div class="main-info" :class="{'main_dark':dark}">
@@ -47,73 +65,66 @@
           >Who is it for ?</div>
         </div>
         <div class="half2">
-          <p>As mentioned, KNTU CTF is more of an intuitive based challenge, so all you need to participate in our event is a basic programming knowledge, good intuition and out of the box thinking. if you think you have these qualities then stay tuned for our events, because you belong there.</p>
+          <p>As mentioned, BauCTF is more of an intuitive based challenge, so all you need to participate in our event is a basic programming knowledge, good intuition and out of the box thinking. if you think you have these qualities then stay tuned for our events, because you belong there.</p>
         </div>
       </div>
 
       <div class="team-container">
-        <div class="event" v-if="latestEvent != null">
-          <div class="event-top">
-            <h1>Latest Event</h1>
-            <a class="button" href="/login">REGISTER NOW</a>
-          </div>
-          <div class="event-info">
-            <h2>{{latestEvent.name}}</h2>
-            <h3>{{latestEvent.type}} - {{latestEvent.format}}</h3>
-            <h3>{{latestEvent.start}} -- {{latestEvent.end}}</h3>
-          </div>
-        </div>
-
         <div class="team" :class="{'team_dark':dark}">
           <div class="glitch" data-text="OUR TEAM">OUR TEAM</div>
-          <div class="members">
-            <div class="line">
-              <div class="profile">
-                <g-image class="pic" src="~/assets/profile/sam.jpg" alt />
-                <p class="name">Parsa Samadnejad</p>
-                <p class="info">
-                  Leader
-                  <br />Challenge Designer
-                  <br />Full-Stack Developer
-                </p>
-              </div>
-              <div class="profile">
-                <g-image class="pic" src="~/assets/profile/mahdi.jpg" alt />
-                <p class="name">Mahdi Mahmoodian</p>
-                <p class="info">Executive Director</p>
-              </div>
-              <div class="profile">
-                <g-image class="pic" src="~/assets/profile/kazemi.jpg" alt />
-                <p class="name">Mohammad Kazemi</p>
-                <p class="info">Back-end Developer</p>
-              </div>
-              <div class="profile">
-                <g-image class="pic" src="~/assets/profile/sarah.png" alt />
-                <p class="name">Sarah Firouzabadi</p>
-                <p class="info">Designer</p>
-              </div>
+          <div class="line">
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/sam.jpg" alt />
+              <p class="name">Parsa Samadnejad</p>
+              <p class="info">
+                Leader
+                <br />Challenge Designer
+                <br />Full-Stack Developer
+              </p>
+            </div>
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/mehran.jpg" alt />
+              <p class="name">Mahdi Mahmoodian</p>
+              <p class="info">Executive Director</p>
+            </div>
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/kazemi.jpg" alt />
+              <p class="name">Mohammad Kazemi</p>
+              <p class="info">Back-end Developer</p>
+            </div>
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/dvm.jpg" alt />
+              <p class="name">Sarah Firouzabadi</p>
+              <p class="info">Designer</p>
             </div>
           </div>
         </div>
       </div>
       <div class="bottom">
-        <div class="contact">
-          <a href="mailto:support@kntuctf.ir" target="_blank">
-            <g-image class="logo" src="~/assets/logo/gmail-64.png" alt="email" />
-          </a>
-          <a href="https://t.me/kntuctf" target="_blank">
-            <g-image class="logo" src="~/assets/logo/telegram-app-64-2.png" alt="telegram" />
-          </a>
-          <a href="#" target="_blank">
-            <g-image class="logo" src="~/assets/logo/discord-64.png" alt="discord" />
-          </a>
-          <a href="https://github.com/kntuctf" target="_blank">
-            <g-image class="logo" src="~/assets/logo/GitHub-Mark-Light-64px.png" alt="github" />
-          </a>
+        <div class="contact-container">
+          <div class="small-icon">
+            <g-image src="/img/logo.png"/>
+          </div>
+          <div class="contact">
+            <h4>Follow Us On</h4>
+            <div class="addr">
+              <a href="" target="_blank">
+                <g-image class="logo" src="~/assets/logo/email.png" alt="email" />
+              </a>
+              <a href="" target="_blank">
+                <g-image class="logo" src="~/assets/logo/telegram.png" alt="telegram" />
+              </a>
+              <a href="#" target="_blank">
+                <g-image class="logo" src="~/assets/logo/discord.png" alt="discord" />
+              </a>
+              <a href="https://github.com/BauCTF" target="_blank">
+                <g-image class="logo" src="~/assets/logo/GitHub-Mark-Light-64px.png" alt="github" />
+              </a>
+            </div>
+          </div>
         </div>
-
-        <div class="bottom">
-          <p class="copy">Copyright © 2020 3P1X</p>
+        <div>
+          <p class="copy">Copyright © 2019 3P1X, All Rights Reserved.</p>
         </div>
       </div>
     </Layout>
@@ -125,12 +136,12 @@ import { mapState } from "vuex";
 
 export default {
   metaInfo: {
-    title: "KNTU CTF"
+    // title: ""
   },
   computed: mapState(["dark", "latestEvent"]),
   components: {},
   mounted: function() {
-    this.$store.dispatch("latestEvent");
+    // this.$store.dispatch("latestEvent");
     // geting canvas by Boujjou Achraf
     var c = document.getElementById("c");
     var ctx = c.getContext("2d");
@@ -148,7 +159,15 @@ export default {
     for (var x = 0; x < columns; x++) drops[x] = 1;
 
     function draw() {
-      ctx.fillStyle = "rgb(17, 17, 17,0.08)";
+      if(window.innerWidth != c.width || window.innerHeight != c.height){
+        c.width = window.innerWidth
+        c.height = window.innerHeight
+
+        var columns = c.width / font_size;
+        for (var x = 0; x < columns; x++) drops[x] = 1;
+      }
+
+      ctx.fillStyle = "rgb(0, 0, 0,0.06)";
       ctx.fillRect(0, 0, c.width, c.height);
 
       ctx.fillStyle = "rgb(20, 148, 20)";
@@ -210,9 +229,37 @@ export default {
 
 .event {
   width: 80%;
-  font-family: "Tomorrow", sans-serif;
   color: white;
   margin-bottom: 20px;
+}
+
+.event-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Tomorrow", sans-serif;
+  background-color: rgba(0,0,0,.7);
+}
+
+.sponsor{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.sponsor > a{
+  background: var(--second-color);
+  color: var(--background-dark);
+  text-transform: uppercase;
+  border: none;
+  padding: 0.5em 0.8em;
+  border-radius: 5px;
+  font-size: .8em;
+  cursor: pointer;
+  font-family: Tomorrow,sans-serif;
 }
 
 .event-top > h1 {
@@ -262,6 +309,11 @@ export default {
   animation: scrollDown 2s infinite;
   -webkit-animation: scrollDown 2s infinite;
   -moz-animation: scrollDown 2s infinite;
+}
+
+#icon{
+  height: 80%;
+  width: auto;
 }
 
 .down-hide {
@@ -503,9 +555,9 @@ export default {
 }
 
 .line {
-  width: 100%;
+  min-width: 65%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex-flow: row wrap;
 }
@@ -515,8 +567,8 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Teko", sans-serif;
-  margin: 2vh;
+  font-family: Bebas Neue,cursive;
+  margin: 15px;
 }
 
 .profile:hover .pic {
@@ -531,7 +583,7 @@ export default {
 }
 
 .pic {
-  height: 20vh;
+  height: 18vh;
   width: auto;
   border-radius: 20vh;
   border: solid;
@@ -568,28 +620,59 @@ export default {
   justify-content: center;
   align-items: center;
   color: white;
+  padding: 20px 0;
+  width: 100%;
+  color: #fff;
+  background-color: rgba(0,0,0,.5);
 }
 
-.contact {
-  height: 10vh;
-  width: 40%;
+.contact-container{
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+}
+
+.addr{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
 }
 
-.copy {
-  font-family: "Teko", sans-serif;
-  height: 5vh;
-  width: 100%;
+.addr > a{
+  margin: 8px;
+}
+
+.contact > h4{
+  margin: 5px;
+  color: var(--second-color);
+  font-family: Tomorrow;
+}
+
+.contact {
+  margin: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.small-icon > img{
+  width: 100px;
+}
+
+.copy {
+  font-family: Tomorrow;
+  font-size: .9em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
 .logo {
-  max-width: 2em;
+  max-width: 1.8em;
   transition: transform 0.5s;
 }
 
@@ -604,7 +687,8 @@ export default {
   justify-content: space-around;
   align-items: center;
   flex-flow: row wrap;
-  padding-bottom: 10vh;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .main_dark {
@@ -629,17 +713,17 @@ export default {
   position: static;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  min-width: 200px;
-  margin: 5vw;
+  align-items: center;
+  min-width: 45%;
+  margin: 10px;
 }
 
 .half2 {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  max-width: 600px;
+  width: 50%;
   padding: 20px;
 }
 
@@ -669,6 +753,7 @@ export default {
   margin: 0 auto;
   padding: 1px;
   animation: convert linear 0.5s;
+  text-align: center;
 }
 
 .glitch-dark::after {
