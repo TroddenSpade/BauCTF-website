@@ -87,10 +87,10 @@ export default {
     }
   },
   created: function() {
-    if (!this.stickable) window.addEventListener("scroll", this.handleScroll);
+    if (process.isClient && !this.stickable ) window.addEventListener("scroll", this.handleScroll);
   },
   destroyed: function() {
-    if (!this.stickable)
+    if (process.isClient && !this.stickable)
       window.removeEventListener("scroll", this.handleScroll);
   }
 };
