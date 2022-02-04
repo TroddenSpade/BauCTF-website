@@ -30,7 +30,7 @@
               Home
             </li>
             <li :class="{'items':true,'active-item':active === 1}" @click="clicked(1)">
-              <img class="tab-icon" src="../assets/icons/event2.png" />
+              <img class="tab-icon" src="../assets/icons/home.png" />
               Events
             </li>
           </ul>
