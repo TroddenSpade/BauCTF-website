@@ -74,7 +74,7 @@
           <div class="glitch" data-text="OUR TEAM">OUR TEAM</div>
           <div class="line">
             <div class="profile">
-              <g-image class="pic" src="~/assets/profile/sam.jpg" alt />
+              <g-image class="pic" src="~/assets/profile/sam3.jpg" alt />
               <p class="name">Parsa Samadnejad</p>
               <p class="info">
                 Leader
@@ -83,19 +83,64 @@
               </p>
             </div>
             <div class="profile">
-              <g-image class="pic" src="~/assets/profile/mehran.jpg" alt />
+              <g-image class="pic" src="~/assets/profile/mahdi.jpg" alt />
               <p class="name">Mahdi Mahmoodian</p>
-              <p class="info">Executive Director</p>
+              <p class="info">
+                Executive Director
+                <br />Challenge Designer
+              </p>
             </div>
             <div class="profile">
               <g-image class="pic" src="~/assets/profile/kazemi.jpg" alt />
               <p class="name">Mohammad Kazemi</p>
-              <p class="info">Back-end Developer</p>
+              <p class="info">
+                Back-end Developer
+                <br/>Challenge Designer
+              </p>
             </div>
             <div class="profile">
-              <g-image class="pic" src="~/assets/profile/dvm.jpg" alt />
+              <g-image class="pic" src="~/assets/profile/sarah.png" alt />
               <p class="name">Sarah Firouzabadi</p>
-              <p class="info">Designer</p>
+              <p class="info">Graphic Designer</p>
+            </div>
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/parsa.jpg" alt />
+              <p class="name">Parsa Mazaheri</p>
+              <p class="info">
+                Challenge Designer
+              </p>
+            </div>
+          </div>
+          <div class="line">
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/dvm.jpg" alt />
+              <p class="name">Mehran Daneshvar</p>
+              <p class="info">Front-end Developer</p>
+            </div>
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/mehran.jpg" alt />
+              <p class="name">Mehran Ghajari</p>
+              <p class="info">Challenge Designer</p>
+            </div>
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/reza.jpg" alt />
+              <p class="name">Reza Liaghat</p>
+              <p class="info">Content Creator</p>
+            </div>
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/rambod.jpg" alt />
+              <p class="name">Rambod Azimi</p>
+              <p class="info">Content Creator</p>
+            </div>
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/arman.jpg" alt />
+              <p class="name">Arman Takestani</p>
+              <p class="info">Staff Member</p>
+            </div>
+            <div class="profile">
+              <g-image class="pic" src="~/assets/profile/ana.jpg" alt />
+              <p class="name">Anahita Ahmadgoli</p>
+              <p class="info">Staff Member</p>
             </div>
           </div>
         </div>
@@ -141,48 +186,50 @@ export default {
   computed: mapState(["dark", "latestEvent"]),
   components: {},
   mounted: function() {
-    // this.$store.dispatch("latestEvent");
-    // geting canvas by Boujjou Achraf
-    var c = document.getElementById("c");
-    var ctx = c.getContext("2d");
+    if (process.isClient) {
+      // this.$store.dispatch("latestEvent");
+      // geting canvas by Boujjou Achraf
+      var c = document.getElementById("c");
+      var ctx = c.getContext("2d");
 
-    c.height = window.innerHeight;
-    c.width = window.innerWidth;
+      c.height = window.innerHeight;
+      c.width = window.innerWidth;
 
-    var matrix =
-      "田由甲申甴电甶男甸甹町画甼甽甾甿abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
-    matrix = matrix.split("");
+      var matrix =
+        "田由甲申甴电甶男甸甹町画甼甽甾甿abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+      matrix = matrix.split("");
 
-    var font_size = 10;
-    var columns = c.width / font_size;
-    var drops = [];
-    for (var x = 0; x < columns; x++) drops[x] = 1;
+      var font_size = 10;
+      var columns = c.width / font_size;
+      var drops = [];
+      for (var x = 0; x < columns; x++) drops[x] = 1;
 
-    function draw() {
-      if(window.innerWidth != c.width || window.innerHeight != c.height){
-        c.width = window.innerWidth
-        c.height = window.innerHeight
+      function draw() {
+        if(window.innerWidth != c.width || window.innerHeight != c.height){
+          c.width = window.innerWidth
+          c.height = window.innerHeight
 
-        var columns = c.width / font_size;
-        for (var x = 0; x < columns; x++) drops[x] = 1;
+          var columns = c.width / font_size;
+          for (var x = 0; x < columns; x++) drops[x] = 1;
+        }
+
+        ctx.fillStyle = "rgb(0, 0, 0,0.06)";
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        ctx.fillStyle = "rgb(20, 148, 20)";
+        ctx.font = font_size + "px arial";
+        for (var i = 0; i < drops.length; i++) {
+          var text = matrix[Math.floor(Math.random() * matrix.length)];
+          ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+          if (drops[i] * font_size > c.height && Math.random() > 0.975)
+            drops[i] = 0;
+
+          drops[i]++;
+        }
       }
-
-      ctx.fillStyle = "rgb(0, 0, 0,0.06)";
-      ctx.fillRect(0, 0, c.width, c.height);
-
-      ctx.fillStyle = "rgb(20, 148, 20)";
-      ctx.font = font_size + "px arial";
-      for (var i = 0; i < drops.length; i++) {
-        var text = matrix[Math.floor(Math.random() * matrix.length)];
-        ctx.fillText(text, i * font_size, drops[i] * font_size);
-
-        if (drops[i] * font_size > c.height && Math.random() > 0.975)
-          drops[i] = 0;
-
-        drops[i]++;
-      }
+      setInterval(draw, 30);
     }
-    setInterval(draw, 30);
   },
   methods: {
     handleScroll() {
@@ -195,10 +242,12 @@ export default {
     }
   },
   created: function() {
-    window.addEventListener("scroll", this.handleScroll);
+    if (process.isClient) 
+      window.addEventListener("scroll", this.handleScroll);
   },
   destroyed: function() {
-    window.removeEventListener("scroll", this.handleScroll);
+    if (process.isClient) 
+      window.removeEventListener("scroll", this.handleScroll);
   }
 };
 </script>
@@ -598,19 +647,19 @@ export default {
   justify-content: center;
   border: solid;
   border-width: 0px;
-  border-radius: 5px;
+  border-radius: 2px;
   margin: 10px;
   padding-left: 5px;
   padding-right: 5px;
 }
 
 .info {
-  font-size: 2vh;
+  font-size: 1.8vh;
   display: flex;
   justify-content: center;
   color: grey;
   margin: 0;
-  min-height: 9vh;
+  min-height: 8vh;
 }
 
 .bottom {
