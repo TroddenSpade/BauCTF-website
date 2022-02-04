@@ -11,8 +11,8 @@ export default {
         }
       })
       .catch(err => {
-        if (err.response) return alert(err.response.data.error);
-        return alert(err);
+        // if (err.response) return alert(err.response.data.error);
+        // return alert(err);
       });
   },
   events({ commit, state }) {
@@ -20,7 +20,7 @@ export default {
       .get(EVENTS, {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token")
+          // Authorization: "Bearer " + localStorage.getItem("token")
         }
       })
       .then(res => {
@@ -29,8 +29,8 @@ export default {
         }
       })
       .catch(err => {
-        if (err.response) return alert(err.response.data.error);
-        return alert(err);
+        // if (err.response) return alert(err.response.data.error);
+        // return alert(err);
       });
   },
   participate({ commit, dispatch }, data) {
@@ -44,19 +44,19 @@ export default {
         {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token")
+            // Authorization: "Bearer " + localStorage.getItem("token")
           }
         }
       )
       .then(res => {
         if (res.data) {
-          alert(res.data.message);
+          // alert(res.data.message);
         }
         dispatch("events");
       })
       .catch(err => {
-        if (err.response) return alert(err.response.data.message);
-        return alert(err);
+        // if (err.response) return alert(err.response.data.message);
+        // return alert(err);
       });
   }
 };

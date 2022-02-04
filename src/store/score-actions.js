@@ -13,8 +13,8 @@ export default {
         }
       })
       .catch(err => {
-        if (err.response) return notification(err.response.data.message);
-        return notification(err);
+        // if (err.response) return notification(err.response.data.message);
+        // return notification(err);
       });
   },
   leaderboard({ commit }) {
@@ -31,8 +31,8 @@ export default {
         }
       })
       .catch(err => {
-        if (err.response) return alert(err.response.data.error);
-        return alert(err);
+        // if (err.response) return alert(err.response.data.error);
+        // return alert(err);
       });
   },
   submissions({ commit }) {
@@ -49,8 +49,8 @@ export default {
         }
       })
       .catch(err => {
-        if (err.response) return alert(err.response.data.error);
-        return alert(err);
+        // if (err.response) return alert(err.response.data.error);
+        // return alert(err);
       });
   }
 };

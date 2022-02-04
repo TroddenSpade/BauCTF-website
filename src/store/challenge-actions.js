@@ -7,7 +7,7 @@ export default {
       .get(CHALLENGES, {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
+          // Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((res) => {
@@ -16,8 +16,8 @@ export default {
         }
       })
       .catch((err) => {
-        if (err.response) return alert(err.response.data.message);
-        return alert(err);
+        // if (err.response) return alert(err.response.data.message);
+        // return alert(err);
       });
   },
   submit({ dispatch }, data) {
@@ -31,17 +31,17 @@ export default {
         {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            // Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
       )
       .then((response) => {
-        alert(response.data.message);
+        // alert(response.data.message);
         if (response.status == 200) dispatch("challenges");
       })
       .catch((err) => {
-        if (err.response) return alert(err.response.data.message);
-        alert(err);
+        // if (err.response) return alert(err.response.data.message);
+        // alert(err);
       });
   },
 };
